@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Octad</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/optraIcon.png') }}" type="image/x-icon">
+
+    {% include 'base/css_links.html' %}
+</head>
+
+<body class=""><!-- mini-navbar -->
+    <div id="wrapper">
+
+      {% include 'base/navBar.html' %}
+
+      <div class="navbar-header navToggleBtn">
+        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary m-n" href="#"><i class="fa fa-bars"></i> </a>
+      </div>
+
+      {% include 'base/header.html' %}
+
+      <div id="page-wrapper" class="gray-bg sideNavBody"><!-- btmNavBody -->
+        <div class="wrapper wrapper-content full-height">
+          <div class="row m-n">
+            <div class="col-lg-12" style="padding:0;">
+               <div class="ibox ">
+                  <div class="ibox-title">
+                                 
+<p><span class = "boldheader">Data Sources V180819</span></p>
+<p><span>&nbsp;</span></p>
+
+<!--<a id="t.d86f9daf11885498c14be86a7fe821a4df8ac125"></a>-->
+<!--<a id="t.0"></a>-->
+
+<!--BEGIN TABLE-->
+ <table class = "border">
+<caption class = "boldHeader">Tissue Type</caption>
+<tbody>
+	<tr>
+		<td>Database</td>
+		<td>Normal</td>
+		<td>Adjacent</td>
+		<td>Primary</td>
+		<td>Recurrent</td>
+		<td>Metastatic</td>
+		<td>Sample Size</td>
+	</tr>
+	<tr>
+		<td>St Jude&rsquo;s</td>
+		<td>0</td>
+		<td>0</td>
+		<td>66</td>
+		<td>0</td>
+		<td>0</td>
+		<td>66</tr>
+	<tr>
+		<td>GTEx</td>
+		<td>7412</td>
+		<td>0</td>
+		<td>0</td>
+		<td>0</td>
+		<td>0</td>
+		<td>7412</td>
+	</tr>
+	<tr>
+		<td>MET500</td>
+		<td>0</td>
+		<td>0</td>
+		<td>0</td>
+		<td>0</td>
+		<td>387</td>
+		<td>387</td>
+	</tr>
+	<tr>
+		<td>TARGET</td>
+		<td>0</td>
+		<td>11</td>
+		<td>602</td>
+		<td>120</td>
+		<td>1</td>
+		<td>734</td>
+	</tr>
+	<tr>
+		<td>TCGA</td>
+		<td>0</td>
+		<td>726</td>
+		<td>9366</td>
+		<td>44</td>
+		<td>393</td>
+		<td>10529</tr>
+	</tr>
+	<tr>
+		<td>TOTAL</td>
+		<td>7412</td>
+		<td>737</td>
+		<td>10034</td>
+		<td>164</td>
+		<td>781</td>
+		<td>19128</td>
+	</tr>
+</tbody>
+</table>
+<!--END TABLE--->
+
+<!--Spacing-->
+<p class="c9 c1"><span class="c4">&nbsp;</span></p>
+<p class="c9 c1"><span class="c4">&nbsp;</span></p>
+
+<!--GTEx(Genotype-Tissue Expression)-->
+<p><span class=" boldheader">GTEx (Genotype-Tissue Expression) n= 7412 (2741 F, 4671 M)</span></p>
+<ul class="lst-kix_bk9lneiw6yx8-0 start">
+	<li><span>For info, visit <a
+        href="https://www.google.com/url?q=https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id%3Dphs000424.v7.p2&amp;sa=D&amp;ust=1536357002517000">&nbsp;</a>
+	</span><span><a href="https://www.google.com/url?q=https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id%3Dphs000424.v7.p2&amp;sa=D&amp;ust=1536357002517000">
+	https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs000424.v7.p2</a></span></li>
+	<li><span>For stats, visit</span><span><a href="https://www.google.com/url?q=https://www.gtexportal.org/home/tissueSummaryPage&amp;sa=D&amp;ust=1536357002517000">&nbsp;</a>
+	</span><span><a href="https://www.google.com/url?q=https://www.gtexportal.org/home/tissueSummaryPage&amp;sa=D&amp;ust=1536357002517000">
+	https://www.gtexportal.org/home/tissueSummaryPage</a></span></li>
+	<li><span>GTEx is a biobank funded by NIH to study how genetic variation affect RNA expression levels in normal tissue samples. </span></li>
+	<li><span>The GTEx samples are named as GTEX-XXXXX-YYYY-SM-ZZZZZ. XXXXX is the patient ID, YYYY is the code for the tissue, and ZZZZZ is the sample aliquot used for sequencing.
+	</span></li>
+	<li><span>Enrollment concluded in 2015 and sample collection is still ongoing. The goal to have ~960 donors at the end of project</span></li>
+	<li><span>Data downloaded from UCSC Xenabrowser (which included GTEx, TARGET, and TCGA data) </span><span>
+	<a href="https://www.google.com/url?q=https://xenabrowser.net/datapages/?hub%3Dhttps://toil.xenahubs.net:443&amp;sa=D&amp;ust=1536357002518000">
+	https://xenabrowser.net/datapages/?hub=https://toil.xenahubs.net:443</a></span></li>
+	<li><span>We filtered for data with complete phenotype metadata e.g. tissue origin and filtered out for cell lines in the GTEx. </span>
+	</li>
+</ul>
+
+<!--Spacing-->
+<p><span></span></p>
+
+<!--TARGET(Therapuetically Applicable Resaerch to Generate Effective Treatments)-->
+<p><span class="boldheader">TARGET (Therapeutically Applicable Research to Generate Effective Treatments) n= 734 (359 F, 375 M)</span></p>
+<ul class="lst-kix_um1kwdlejev3-0 start">
+	<li><span>For info, visit</span><span><a class="c11" href="https://www.google.com/url?q=https://ocg.cancer.gov/programs/target&amp;sa=D&amp;ust=1536357002519000">&nbsp;</a></span>
+        <span><a href="https://www.google.com/url?q=https://ocg.cancer.gov/programs/target&amp;sa=D&amp;ust=1536357002519000">https://ocg.cancer.gov/programs/target</a></span></li>
+	<li><span>For stats, visit</span><span><a href="https://www.google.com/url?q=https://portal.gdc.cancer.gov/exploration&amp;sa=D&amp;ust=1536357002519000">&nbsp;</a></span>
+        <span><a href="https://www.google.com/url?q=https://portal.gdc.cancer.gov/exploration&amp;sa=D&amp;ust=1536357002519000">https://portal.gdc.cancer.gov/exploration</a></span></li>
+	<li>
+	<span>
+	TARGET is the data&nbsp;source for childhood cancers, including Neuroblastoma, Acute Myeloid Leukemia, Wilms Tumor, Rhabdoid kidney tumor, and Clear Cell Sarcoma of the kidney
+	</span></li>
+	<li><span>Sample ID are headed by &ldquo;TARGET&rdquo;</span></li>
+	<li><span>Data downloaded from UCSC Xenabrowser (which included GTEx, TARGET, and TCGA data) </span><span>
+	<a href="https://www.google.com/url?q=https://xenabrowser.net/datapages/?hub%3Dhttps://toil.xenahubs.net:443&amp;sa=D&amp;ust=1536357002520000">
+	https://xenabrowser.net/datapages/?hub=https://toil.xenahubs.net:443
+	</a></span></li>
+	<li><span>We filtered for data with complete phenotype metadata e.g. tissue origin or cancer type.
+</span></li></ul>
+
+<!--TCGA (The Cancer Genome Atlas)-->
+<p><span class="boldheader">TCGA (The Cancer Genome Atlas) n= 10529 (5282 F, 5247 M)</span></p>
+<ul class="lst-kix_xpbo815osfhk-0 start">
+	<li><span>For info, visit</span><span><a href="https://www.google.com/url?q=https://cancergenome.nih.gov/&amp;sa=D&amp;ust=1536357002520000">&nbsp;</a></span>
+	<span><a href="https://www.google.com/url?q=https://cancergenome.nih.gov/&amp;sa=D&amp;ust=1536357002521000">https://cancergenome.nih.gov/</a></span></li>
+	<li><span>For stats, visit</span><span><a href="https://www.google.com/url?q=https://portal.gdc.cancer.gov/exploration&amp;sa=D&amp;ust=1536357002521000">&nbsp;</a></span>
+	<span><a href="https://www.google.com/url?q=https://portal.gdc.cancer.gov/exploration&amp;sa=D&amp;ust=1536357002521000">https://portal.gdc.cancer.gov/exploration</a></span></li>
+	<li>
+	<span>TCGA is a collaboration between National Cancer Institute(NCI) and National Human genome research Institute (NHGRI) involving 20 institutions from the US and Canada to
+	      collect adjacent and cancerous tissues.
+	</span></li>
+	<li><span>Sample IDs are headed with &ldquo;TCGA&rdquo;</span></li>
+	<li><span>Sample collection ended in 2013 after obtaining 20,000 tissues of 33 types of cancer from over 11,000 patients. &nbsp;</span></li>
+	<li><span>We filtered for data with complete phenotype metadata e.g. tissue origin or cancer type. </span></li></ul>
+<p><span></span></p>
+
+<!--MET 500-->
+<p><span class="boldheader">MET 500 n= 387 (187 F, 200 M) </span></p>
+<!--<p class="c9 c1"><span>For info, visit</span><span><a class="c11" href="https://www.google.com/url?q=https://www.nature.com/articles/nature23306.pdf&amp;sa=D&amp;ust=1536357002522000">&nbsp;</a></span><span class="c7"><a class="c11" href="https://www.google.com/url?q=https://www.nature.com/articles/nature23306.pdf&amp;sa=D&amp;ust=1536357002522000">https://www.nature.com/articles/nature23306.pdf</a></span></p>-->
+<ul class="lst-kix_4gddmcc4j6kj-1 start">
+	<li><span>For info, visit</span><span><a href="https://www.google.com/url?q=https://www.nature.com/articles/nature23306.pdf&amp;sa=D&amp;ust=1536357002522000">&nbsp;</a></span>
+        <span><a href="https://www.google.com/url?q=https://www.nature.com/articles/nature23306.pdf&amp;sa=D&amp;ust=1536357002522000">
+	https://www.nature.com/articles/nature23306.pdf</a></span></li>
+	<li><span>Dan R. Robinson et al. Integrative Clinical Genomics of Metastatic Cancer. &nbsp;Nature. 2017. 548:297-303.</span></li>
+	<li><span>Sample IDs headed by &ldquo;SRR&rdquo;</span></li>
+	<li><span>Metastatic cancer samples from 500 adult patients</span></li>
+	<li><span>This data contains 101 unique cancers. The top 2 metastatic cancer were prostate adenocarcinoma and breast invasive carcinoma.</span></li>
+	<li><span>Counts were computed using UC Santa Cruz TOIL. </span></li>
+	<li><span>The data had both polyA and Hybrid RNASeq runs. In order to ensure consistent comparison we only retained the polyA counts. </span></li></ul>
+<p><span></span></p>
+
+<!--Saint Judes Hospital-->
+<p><span class="boldheader">St. Jude&rsquo;s Hospital n= 66 (29 F, 37 M)</span></p>
+<ul class="lst-kix_7wtx8zu6aplt-0 start">
+	<li><span>
+	This set of data of data are High Grade Glioma samples containing 22 samples of Diffuse Intrinsic Pontine Glioma and 44 samples of Non-Brainstem High Grade Glioma </span></li>
+	<li><span>Sample IDs are headed by &ldquo;SJHGG&rdquo;</span></li>
+	<li><span>Counts were computed using UC Santa Cruz TOIL. </span></li></ul>
+
+
+		   </div>
+                  <div class="ibox-content"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% include 'base/footer.html' %}
+      </div>
+      {% include 'base/js_links.html' %}
+
+    <script type="">
+      var jobsTable;
+      $(document).ready(function(){
+
+      });
+    </script>
+</body>
+</html>

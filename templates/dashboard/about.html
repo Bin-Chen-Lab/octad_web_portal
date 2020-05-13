@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Octad</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/optraIcon.png') }}" type="image/x-icon">
+    {% include 'base/css_links.html' %}
+</head>
+
+<body class=""><!-- mini-navbar -->
+    <div id="wrapper">
+
+      {% include 'base/navBar.html' %}
+
+      <div class="navbar-header navToggleBtn">
+        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary m-n" href="#"><i class="fa fa-bars"></i> </a>
+      </div>
+
+      {% include 'base/header.html' %}
+
+      <div id="page-wrapper" class="gray-bg sideNavBody"><!-- btmNavBody -->
+        <div class="wrapper wrapper-content full-height">
+          <div class="row m-n">
+            <div class="col-lg-12" style="padding:0;">
+               <br class="ibox ">
+                  <div class="ibox-title">
+                      <h5>About</h5>
+                  </div>
+                  <div class="ibox-content">
+                      OCTAD is aimed to build up an open community (open data, open code and open science) for cancer therapeutic discovery. It is hosted and maintained by <a href="http://binchenlab.org/" target="_blank" style="color:#6cc04a;">Bin Chen Lab</a> @ Michigan State University. The main contributors of version 1.0 are as follows.
+                      <br>Anita Wen (desktop version/use case)
+                      <br>Anthony Sciarini (front end/html page format)
+                      <br>Ben Glicksberg (front end/user experience)
+                      <br>Billy Zeng (back end)
+                      <br>Bin Chen (lead, PI)
+                      <br>Jing Xing (back end/pharmacology)
+                      <br>Ke Liu (data sets)
+                      <br>Optra Health Inc, <a href="http://www.optrahealth.com/iphronesis" target="_blank" style="color:#6cc04a;">iPhronesis<sup>TM</sup></a> (front end)
+                      <br>Patrick Newbury (use case, front end, back end)
+                      <p></p>
+                      <p> Contact <a href="mailto:octad.contact@gmail.com">octad.contact@gmail.com </a>for any questions.</p>
+                  </div>
+                   <br class="ibox-content">
+                       <br>Please cite the following paper:
+                       <br>Billy Zeng, Benjamin S. Glicksberg, Patrick Newbury, Jing Xing, Ke Liu, Anita Wen, Caven Chow, Bin Chen, OCTAD: an open workplace for virtually screening compounds targeting precise cancer patient groups using gene expression features (under preparation)
+
+                        <br>Relevant paper: Chen B*#, Ma L*, Paik H, Sirota M, So S, Chua MS#, Butte AJ#. Reversal of cancer gene expression correlates with drug efficacy and suggests therapeutic targets, Nat Commun. 2017 Jul 12; 8:16022. PMID: 28699633. (*co-first authors, #co-corresponding authors)
+
+                        <br>Relevant paper: William Zeng, Benjamin Glicksberg, Yangyan Li, Bin Chen, Selecting precise reference normal tissue samples for cancer research using a deep learning approach, https://doi.org/10.1101/336909, BMC medical genomics. PMID: 30704474
+                    <p></p>
+                    <br>Acknowledgements:
+                        <br>The work is supported by R21 TR001743 and K01 ES028047 and the MSU Global Impact Initiative. We receive Amazon AWS research credits for portal development and hosting. The content is solely the responsibility of the authors and does not necessarily represent the official views of sponsors.
+
+                    </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% include 'base/footer.html' %}
+      </div>
+      {% include 'base/js_links.html' %}
+
+    <script type="">
+      var jobsTable;
+      $(document).ready(function(){
+
+      });
+    </script>
+</body>
+</html>
