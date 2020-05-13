@@ -1,0 +1,52 @@
+# example production configuration file for octad.org flask application
+# copy this config.py.example file to production.py, and complete the values for 
+# database connection, etc.  
+# ensure that any python file in the config folder that has passwords is excluded
+# from the git repository (see .gitignore file)
+
+import os
+from logging import getLogger
+from datetime import timedelta
+
+APPLICATION_ROOT = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))  # app package name
+
+BASE_URL = 'http://octad.org'
+
+DEBUG = False
+TESTING = False
+
+# example database connection string
+# replace <user>, <password> and <host> with the correct values
+# and remove the # comment sign
+# SQLALCHEMY_DATABASE_URI = 'mysql://<mysqluser>:<mysqlpassword>@<mysqlhost>/octad'
+SQLALCHEMY_POOL_SIZE = 5
+SQLALCHEMY_POOL_RECYCLE = 60 * 60
+SQLALCHEMY_POOL_TIMEOUT = 20
+SQLALCHEMY_ECHO = False
+SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+LOGGERS = [getLogger('sqlalchemy')]  # TODO check the getlogger of sqlalchemy
+
+# type in a 'SECRET_KEY' to enable the Flask session cookies
+# and remove the comment character #
+# SECRET_KEY = 'replace with any string'
+
+BLUEPRINTS = ['views.base.baseRoute', 'views.dashboard.dashboardRoute', 'views.profile.profile',
+			  'views.custom_api.apiRoute']
+
+# find the path to rscript on your system using the command which rscript
+# or enter the path to the preferred version of R
+RSCRIPT_PATH = '/usr/bin/Rscript'
+
+# type in the correct path to  the OCTAD Rcode and remove the comment line
+# RREPO_PATH = '/path/to/OCTAD_core/'
+
+# Data output folder
+# update this value
+# this the default location for output files
+# underneath the application folder
+# but it should potentially be located on external storage 
+RREPO_OUTPUT = APPLICATION_ROOT + '/static/data/'
+
+WTF_CSRF_ENABLED = False
+REMEMBER_COOKIE_DURATION = timedelta(days=1)
