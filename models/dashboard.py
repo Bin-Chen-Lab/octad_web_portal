@@ -48,15 +48,15 @@ class Job(CRUDMixin, db.Model):
 	userDetails = relationship("User", backref=backref("users"))
 
 	@staticmethod
-	def get_new_id():
+	def get_new_id(jobname='new_job'):
 		try:
 			# lastrowid = Job.query.order_by('-id').first().id
 			# print lastrowid
 			# return lastrowid + 1
 			if g.user:
-				job = Job(name='new_job', user_id=g.user.id)
+				job = Job(name=jobname, user_id=g.user.id)
 			else:
-				job = Job(name='new_job')
+				job = Job(name=jobname)
 			job.save()
 			jobDetails = JobDetails(job_id=job.id)
 			jobDetails.save()
@@ -64,7 +64,6 @@ class Job(CRUDMixin, db.Model):
 		except Exception as e:
 			print str(e)
 			return 1
-
 
 class JobDetails(CRUDMixin, db.Model):
 	id = Column(Integer, primary_key=True, autoincrement=True)

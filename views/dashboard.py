@@ -17,7 +17,6 @@ r_output = app.config['RREPO_OUTPUT']
 dashboardRoute = Blueprint('dashboard', __name__)
 dashboardRoute.before_request(before_request)
 
-
 @dashboardRoute.route('/dataset', methods=["GET"])
 # @login_required
 def dataset():
@@ -509,3 +508,33 @@ def manual_check():
 
         # return json.dumps(data)
 
+
+from werkzeug.utils import secure_filename
+
+@dashboardRoute.route('/signature', methods=["GET", "POST"])
+def signature_upload_form():
+    """form for signature file upload, and post kick off job"""
+
+    if request.method == 'GET':
+        return render_template('dashboard/signature_upload.html')
+
+    if request.method == 'POST':
+        # handle post of sigfile
+        # create new job, and if no users logged in, create new user 
+        # save to disk, generate jobid, set default params, submit the job
+
+        # check if file was uploaded or not, and name it with .txt extension for safety
+        if 'file' not in request.files:
+            flash('No file selected')
+            return redirect(request.url)
+
+        file = request.files['file']
+        # if user does not select file, browser also
+        # submit an empty part without filename
+        if file.filename == '':
+            flash('No file actually selected')
+            return redirect(request.url)
+
+        if file:
+            filename = secure_filename(file.filename) + ".txt"            
+            return " {} filename uploaded ".format(filename)
