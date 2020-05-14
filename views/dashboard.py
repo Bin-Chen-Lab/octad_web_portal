@@ -516,25 +516,28 @@ def signature_upload_form():
     """form for signature file upload, and post kick off job"""
 
     if request.method == 'GET':
-        return render_template('dashboard/signature_upload.html')
+        return render_template('dashboard/signature_upload_form.html')
 
     if request.method == 'POST':
+        print "posting from signature form"
         # handle post of sigfile
         # create new job, and if no users logged in, create new user 
         # save to disk, generate jobid, set default params, submit the job
 
         # check if file was uploaded or not, and name it with .txt extension for safety
-        if 'file' not in request.files:
-            flash('No file selected')
-            return redirect(request.url)
+#       if 'file' not in request.files:
+#	    print 'no file in request.files'
+#            flash('No file selected')
+#            return redirect(request.url)
 
-        file = request.files['file']
+#       file = request.files['file']
         # if user does not select file, browser also
         # submit an empty part without filename
-        if file.filename == '':
-            flash('No file actually selected')
-            return redirect(request.url)
+#       if file.filename == '':
+#            print 'signature file upload, filename blank'
+#            flash('No file actually selected')
+#            return redirect(request.url)
 
-        if file:
-            filename = secure_filename(file.filename) + ".txt"            
-            return " {} filename uploaded ".format(filename)
+#       if file:
+#            filename = secure_filename(file.filename) + ".txt"            
+        return " {} upload.form".format(request.form)

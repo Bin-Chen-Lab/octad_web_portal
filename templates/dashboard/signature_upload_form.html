@@ -31,7 +31,7 @@
                                 <h3><span class = "boldheader">Upload Signature File</span></h3>
                             </div>
  
-                            <form class="form-horizontal" action="{% url_for('process_signature') %}" method="get">
+                            <form class="form-horizontal" action="{{ url_for('dashboard.signature_upload_form') }}" method="get">
                                 <div class="form-group">
                                     <label class="control-label col-sm-2" for="file">Signature File:</label>
                                     <div class="col-sm-10">
