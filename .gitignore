@@ -1,3 +1,4 @@
 *.pyc
 static/data/*
 config/*.py
+.vscode
