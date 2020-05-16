@@ -62,6 +62,8 @@ class Job(CRUDMixin, db.Model):
 			return(self.generate_key() == key)
 		else:
 			print("can't check key, job {} has no user_id".format(self.id))
+			return False
+		
 
 	def generate_key(self):
 		"""a given job can generate a key that can be used 

@@ -25,19 +25,22 @@
         <div id="page-wrapper" class="gray-bg sideNavBody"><!-- btmNavBody -->
             <div class="wrapper wrapper-content full-height">
                 <div class="row m-n">
-                    <div class="col-lg-12" style="padding:0;">
-                        <div class="ibox ">
-                            <div class="ibox-title">
+                    <div class="col-lg-12" >
+                        <!-- style="padding:0;" -->
+                        <!-- <div class="ibox ">
+                            <div class="ibox-title"> -->
                                 <h3><span class = "boldheader">Upload Signature File</span></h3>
-                            </div>
+                            <!-- </div> -->
  
-                            <form class="form-horizontal" action="{{ url_for('dashboard.signature_upload_form') }}" method="get">
+                            <form class="form-horizontal" enctype=multipart/form-data action="{{ url_for('dashboard.signature_upload_form') }}" method="post">
+                                <fieldset>                                    
                                 <div class="form-group">
                                     <label class="control-label col-sm-2" for="file">Signature File:</label>
                                     <div class="col-sm-10">
-                                        <input type="file" class="form-control" id="file">
+                                        <input type="file" class="form-control" name="file" id="file">
+                                        <p class="help-block">Select a file in proper signature format (link to help)</p>
                                     </div>
-                                <p class="help-block">Select a file in proper signature format (link to help)</p>
+                                
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-sm-2" for="email">Email:</label>
@@ -51,29 +54,43 @@
                                         <input type="text" class="form-control" id="jobname" placeholder="Enter short jobname">
                                     </div>
                                 </div>
+                                <h3>Options</h3>
                                 <div class="form-group">
-                                    <div class="col-sm-offset-2 col-sm-10">
-                                        <div class="checkbox">
-                                            <label><input type="checkbox">Checkbox</label>
-                                        </div>
+                                    <label class="control-label col-sm-2" for="landmark">Landmark:</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="landmark" value="1">
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="max_gene_size">max_gene_size:</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="max_gene_size" value="900">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="choose_fda_drugs">FDA Drugs Only?</label>
+                                    <div class="col-sm-10">
+                                        <input type="checkbox" id="choose_fda_drugs" checked value="True">
+                                    </div>
+                                </div>
+                                
                                 <div class="form-group">
                                     <div class="col-sm-offset-2 col-sm-10">
                                         <button type="submit" class="btn btn-default">Submit Job</button>
                                     </div>
                                 </div>
+                                </fieldset>
                             </form>
 
                         </div>
                     </div>
-                </div>
+                <!-- </div> -->
             </div>
         </div>
         {% include 'base/footer.html' %}
     </div>
       {% include 'base/js_links.html' %}
 
-      {# TODO modal pop-up confirming job submission, if no user id (anonymous), then give instructions for retriving job #}
+      {# TODO make form submit via JS, modal pop-up confirming job submission, if no user id (anonymous), then give instructions for retriving job #}
 </body>
 </html>

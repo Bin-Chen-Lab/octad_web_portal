@@ -16,7 +16,7 @@ import pandas as pd
 import numpy as np
 rscript_path = app.config['RSCRIPT_PATH']
 rdir_path = app.config['RREPO_PATH']
-r_output = app.config['RREPO_OUTPUT']
+r_output = join(app.config['RREPO_OUTPUT'], '') # ensures path has a trailing slash
 base_url = app.config['BASE_URL']
 
 apiRoute = Blueprint('api', __name__)
@@ -151,7 +151,7 @@ def diseases1():
 	control_tissue_type = data['control_tissue_type']
 
 	args = [ str(job_id), str(case_id_path), str(control_size), str(control_tissue_type)]
-	cmd = [rscript_path, rdir_path + 'select_controls.R']
+	cmd = [rscript_path, join(rdir_path,'select_controls.R')]
 
 	print "Inside Disease1 :"
 	print cmd
@@ -232,6 +232,7 @@ def userJobApi(user_id):
 		jobs_list.append(d)
 
 	return json.dumps(jobs_list)
+
 
 
 @apiRoute.route('/job/status', methods=["GET"])
@@ -345,7 +346,7 @@ def jobRerun():
 
 	jobs = Job.query.filter(Job.status == 5).all()
 	for job in jobs:
-		cmd = [rscript_path, rdir_path + 'drug_predict.R', str(job.id), 'T', str(50), str(1), 'F', 'T']
+		cmd = [rscript_path, join(rdir_path,'drug_predict.R'), str(job.id), 'T', str(50), str(1), 'F', 'T']
 		x = subprocess.Popen(cmd)
 
 
