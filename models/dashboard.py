@@ -2,7 +2,7 @@ from flask import g
 from sqlalchemy import Column, Integer, String, ForeignKey, TIMESTAMP, Boolean, TEXT, or_
 from sqlalchemy.orm import relationship, backref
 from models.base import CRUDMixin, db
-
+import hashlib
 
 STATUS = {0: 'Created', 1: 'Case Visualization', 2: 'Ref Tissue Algo Run', 3: 'Control Visualization',
 		4: 'Signature Compute', 5: 'Drug Prediction In-progress', 6: 'Completed'}
@@ -47,18 +47,58 @@ class Job(CRUDMixin, db.Model):
 
 	userDetails = relationship("User", backref=backref("users"))
 
+
+	#### job key generation methods 
+	# added by P Bills, MSU IT Services, May 2020
+	# goal is to allow access of job details without logging in, using a form of an api 'key'
+	# a job can generate and show it's key, and check that a given key matches
+	# key generation is based on the associated user's password and the job id
+	# each job has it's own key
+    # to create jobs without logging in, create a new random 'job only' user
+	def check_key(self,key):
+		""" given a job, check if key is correct against key generator"""
+		job_user = self.userDetails
+		if job_user:
+			return(self.generate_key() == key)
+		else:
+			print("can't check key, job {} has no user_id".format(self.id))
+
+	def generate_key(self):
+		"""a given job can generate a key that can be used 
+		   to look up the job via URL without login
+		   use very basic method of hash the job id and associated user password
+		"""
+
+		# look up associated user id
+		# combination of userid and 
+		job_user = self.userDetails
+		if job_user:
+			hasher = hashlib.md5()
+			hasher.update(str(self.id))
+			hasher.update(job_user.password)
+			return hasher.hexdigest()
+		else:
+			print("job {} has no user_id".format(self.id))
+			return None
+
+	# modified by PBills MSU IT Services, May 2020
+	# allow job name as a parameter, and create time stamp as this field can not be null
 	@staticmethod
 	def get_new_id(jobname='new_job'):
 		try:
 			# lastrowid = Job.query.order_by('-id').first().id
 			# print lastrowid
 			# return lastrowid + 1
+			import time, datetime
 			if g.user:
 				job = Job(name=jobname, user_id=g.user.id)
 			else:
 				job = Job(name=jobname)
+
+			job.creationTime = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
+
 			job.save()
-			jobDetails = JobDetails(job_id=job.id)
+			jobDetails = JobDetails(job_id=job.id, creationTime = job.creationTime)
 			jobDetails.save()
 			return job.id
 		except Exception as e:
