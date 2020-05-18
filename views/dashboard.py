@@ -570,16 +570,38 @@ def signature_upload_form():
         flash('No file actually selected')
         return redirect(request.url)
     
+    ### collect form information
+    job_name = request.form.get('job_name',"upload {} on {}".format(sigfile.filename, datetime.utcnow())) # validate this
+    job_email = request.form.get('job_email',None)
+    job_description = request.form.get('job_description','uploaded job')
+    choose_fda_drugs = request.form.get('choose_fda_drugs', 'T')
+    max_gene_size = request.form.get('max_genes_size', 50)
+    landmark  = 1 # request.form.get('max_genes_size', 1)  # this value must be 1 or R code crashes
+    job_timestamp = datetime.utcnow()
+
     ### DATABASE RECORDS : Job, JobDetails, AnonymousUser
     #### JOB
-    job_name = request.form.get('job_name',"upload {} on {}".format(sigfile.filename, datetime.utcnow())) # validate this
-    
-    job_id = Job.get_new_id(name=job_name) # note this method has the side effect of creating a new job
-    job = Job.query.get(job_id) # now that we have a job id, have to get the job record again
-    if not job:
-        print "error creating job"
+    try:
+        job = Job(name=job_name,
+            description=job_description,
+            creationTime = job_timestamp,  
+            is_save = True, 
+            status = 6)
+        job.save() # save to db, assign id  
+        # Create Minimal Job details record for signature-only anonymous jobs.  It will not include case or other data
+        jobdetails = JobDetails(job_id = job.id, 
+            choose_fda_drugs = choose_fda_drugs,   
+            max_gene_size = max_gene_size, 
+            landmark = landmark, 
+            creationTime = job_timestamp)
+
+        jobdetails.save()
+
+    except Exception as e:               
         flash('Could not create Job database entry')
-        return redirect(request.url)
+        result = {"message": "error creating job record " + str(e), "category": "error" }
+        return json.dumps(result)
+
     else:
         print("created new job {} id {}".format( job.name, job.id))
 
@@ -588,54 +610,37 @@ def signature_upload_form():
     stat_path = join(r_output, str(job.id)) # stat_path = app.config['APPLICATION_ROOT'] + '/static/data/' + str(job_id) + '/'
     signature_file_path = join(stat_path, DEFAULT_SIGFILE_NAME)
 
-    # TODO exception handling 
+    # TODO add exception handling 
     if not exists(stat_path):
         makedirs(stat_path)
 
     sigfile.save(signature_file_path)
 
-    ##### set user
-    # if g.user:
-    #     print('logged in user {}'.format(g.user))
-    #     job_user = g.user
-    # else:
-    #     # create anonymous user
-    #     job_user = User.job_only_user(job.id)
-    #     print('created new user {}'.format(job_user.id))
+    ##### set user for this job
+    # if a user is logged in during upload, use that user
+    # if a user is not logged in, createa new 'job only' user account
+    # a user account of some kind is needed for consistency and because the key generator uses user data
 
-    # for testing only
-    job_user = User.query.get(68)
+    if g.user:        
+        job_user = g.user
+        print('assigning job to logged-in user {}'.format(g.user))
+    else:
+        # create anonymous user
+        job_user = User.job_only_user(job.id, job_email=job_email)
+        job_user.save()
+        print('created new user {}'.format(job_user.id))
 
-    job_description = request.form.get('job_description','uploaded job')
-    choose_fda_drugs = request.form.get('choose_fda_drugs', 'T')
-    max_gene_size = request.form.get('max_genes_size', 50)
-    landmark  = 1 # request.form.get('max_genes_size', 1)  # this value must be 1 or R code crashes
+    job.update(commit=True, user_id = job_user.id) # add user to job
     
-    job_timestamp = datetime.utcnow()
-
-    job.update(commit=True,
-        user_id = job_user.id,
-
-        description=job_description,
-        creationTime = job_timestamp,  
-        is_save = True, 
-        status = 6)
-
-    # Storing Minimal Job details for signature-only anonymous jobs 
-    jobdetails = job.jobs[0]
-
-    jobdetails.update(commit = True, choose_fda_drugs = choose_fda_drugs,   max_gene_size = max_gene_size,landmark = landmark)
-    # db.session.commit()
-    
-    rscript = 'compute_sRGES_from_signatures.R'
-    cmd = [ rscript_path, join(rdir_path, rscript), str(job_id), signature_file_path, choose_fda_drugs, str(max_gene_size), str(landmark)]
-
-    # example Rscript $RREPO_PATH/compute_sRGES_from_signatures.R 1041 $RREPO_OUTPUT/1041/dz_signature.csv true 50 1
-    # default values for these other parameters?
-
+    ### url and key for job
+    # with a user id, can create a login-free access
     job_key = job.generate_key()
     job_url = url_for('.job_output', job_id=job.id, key = job_key)
-    result = {"message": "Job saved successfully", "category": "success", 'cmd' : cmd, 'jobid': job.id}
+    
+    #### R command
+    rscript = 'compute_sRGES_from_signatures.R'
+    cmd = [ rscript_path, join(rdir_path, rscript), str(job.id), signature_file_path, choose_fda_drugs, str(max_gene_size), str(landmark)]
+    # example Rscript $RREPO_PATH/compute_sRGES_from_signatures.R 1041 $RREPO_OUTPUT/1041/dz_signature.csv true 50 1
 
     try:
         pid = subprocess.Popen(cmd).pid
@@ -649,9 +654,13 @@ def signature_upload_form():
     #     result = {"message": "Invalid data please generate job again", "category": "error"}
     #     return json.dumps(result)
 
-    job.update(commit=False, status=6) # set to 6 for now to allow viewing output
-    db.session.commit()
+    result = {"message": "Job saved successfully", "category": "success", 'cmd' : cmd, 'jobid': job.id}
 
+
+    job.update(commit=True, status=6) # set to 6 for now to allow viewing output
+    db.session.commit()
+    # show user job submission info
+    # TODO wrap in ajax, change form to submit via jquery
     return render_template('dashboard/signature_upload_job.html', job_key = job_key, job_url = job_url, job_id=job.id, job=job, jobdetails=jobdetails, cmd=cmd)
 
 

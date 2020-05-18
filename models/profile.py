@@ -37,11 +37,19 @@ class User(UserMixin, CRUDMixin, db.Model):
 		return unicode(self.id)
 
 	@classmethod
-	def job_only_user(cls, jobid):
-		"""create user account for  """ 
+	def job_only_user(cls, jobid,job_email=None):
+		"""create user account for just for anonymous jobs with uploaded data """ 
 		# TODO test jobid parameter for non-empty values
-		username="octadjob" + str(jobid)
+		if job_email:
+			username = job_email
+		else:
+			username="signatureupload"
+		
+		username = username  + "|" + str(jobid)
+
+		# assign a random password.  This account can't be used for log-in
 		password=generate_password(secrets.token_urlsafe(16))
+		# return User class
 		u = cls(username, password, role='GENERAL', isActivated=True)
 		return u
 
