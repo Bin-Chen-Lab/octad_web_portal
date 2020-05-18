@@ -8,26 +8,27 @@ decorator==4.4.0
 Django==1.11.20
 enum34==1.1.6
 Flask==1.0.3
-Flask-Login==0.2.7
+flask-Login
 Flask-Migrate==2.1.1
 Flask-Script==2.0.6
 Flask-SQLAlchemy==2.3.2
 Flask-WTF==0.14.2
 gunicorn==19.9.0
 idna==2.6
-ipaddress==1.0.17
+# ipaddress==1.0.17
 itsdangerous==1.1.0
 Jinja2==2.10.1
-keyring==10.6.0
+keyring
 keyrings.alt==3.0
 Mako==1.0.10
 MarkupSafe==1.1.1
-MySQL-python==1.2.5
+
+MySQL-connector-python
+MySQL-python
 numpy==1.16.3
 pandas==0.24.2
 pbr==5.2.0
 pycrypto==2.6.1
-pygobject==3.26.1
 python-dateutil==2.8.0
 python-editor==1.0.4
 pytz==2019.1
@@ -38,9 +39,10 @@ six==1.12.0
 SQLAlchemy==1.3.3
 sqlalchemy-migrate==0.12.0
 sqlparse==0.3.0
-Tempita==0.5.2
+# Tempita==0.5.2
 urllib3==1.25.2
 uWSGI==2.0.18
 virtualenv==15.1.0
 Werkzeug==0.15.4
 WTForms==2.2.1
+python2-secrets==1.0.5
