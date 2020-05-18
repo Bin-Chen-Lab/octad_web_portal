@@ -27,12 +27,13 @@
             <div class="wrapper wrapper-content full-height">
                 <div class="row m-n">
                     <div class="col-lg-12">
-                        <h3>job submitted</h3>
+                        <h3>job {{job_id}} submitted : <a href="{{job_url}}">Link</a></h3>
                         <p>
+                            key = {{job_key}}<br>
                             {{results}}
                         </p>
                         <p>
-                            {{job}}
+                            {{job.userDetails}}
                         </p>
                         <p>
                             {{jobdetails}}
@@ -45,8 +46,10 @@
             </div>
             {% include 'base/footer.html' %}
         </div>
+    
     {% include 'base/js_links.html' %}
     
+
     {# TODO modal pop-up confirming job submission, if no user id (anonymous), then give instructions for retriving job #}
 </body>
 

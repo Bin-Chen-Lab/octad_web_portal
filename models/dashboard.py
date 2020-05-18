@@ -3,6 +3,8 @@ from sqlalchemy import Column, Integer, String, ForeignKey, TIMESTAMP, Boolean, 
 from sqlalchemy.orm import relationship, backref
 from models.base import CRUDMixin, db
 import hashlib
+from datetime import datetime
+
 
 STATUS = {0: 'Created', 1: 'Case Visualization', 2: 'Ref Tissue Algo Run', 3: 'Control Visualization',
 		4: 'Signature Compute', 5: 'Drug Prediction In-progress', 6: 'Completed'}
@@ -86,18 +88,18 @@ class Job(CRUDMixin, db.Model):
 	# modified by PBills MSU IT Services, May 2020
 	# allow job name as a parameter, and create time stamp as this field can not be null
 	@staticmethod
-	def get_new_id(jobname='new_job'):
+	def get_new_id(name='new_job'):
 		try:
 			# lastrowid = Job.query.order_by('-id').first().id
 			# print lastrowid
 			# return lastrowid + 1
-			import time, datetime
+			
 			if g.user:
-				job = Job(name=jobname, user_id=g.user.id)
+				job = Job(name=name, user_id=g.user.id)
 			else:
-				job = Job(name=jobname)
+				job = Job(name=name)
 
-			job.creationTime = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
+			job.creationTime = datetime.utcnow() # .strftime('%Y-%m-%d %H:%M:%S')
 
 			job.save()
 			jobDetails = JobDetails(job_id=job.id, creationTime = job.creationTime)

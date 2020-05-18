@@ -46,7 +46,14 @@ RSCRIPT_PATH = '/usr/bin/Rscript'
 # this the default location for output files
 # underneath the application folder
 # but it should potentially be located on external storage 
+# TRAILING SLASH REQUIRED
 RREPO_OUTPUT = APPLICATION_ROOT + '/static/data/'
 
 WTF_CSRF_ENABLED = False
 REMEMBER_COOKIE_DURATION = timedelta(days=1)
+
+#### put these paths into the environment to make system more portable
+os.environ["RREPO_PATH"] = os.path.abspath(RREPO_PATH)
+os.environ["RREPO_OUTPUT"] =  os.path.abspath(RREPO_OUTPUT)
+# optional setting if using special library path or renv environments
+# os.environ["R_LIBS"] = os.path.abspath(RREPO_PATH + "/renv/library/<add your path>")
