@@ -48,10 +48,18 @@
                             </span>
                             <span style=" margin-left: 1%;margin-right: 5%; font-weight: 900;">{{ job.creationTime }}</span>
                             <span style="font-size: 14px;color: #0ca90c;">
-                                <strong>Job Description : </strong>
+                                <strong>Job Description : </strong>                                
                             </span>
                             <span style=" margin-left: 1%;font-weight: 900;">{{ job.description }}</span>
                             <span style="float: right;"><button id="drugsFiles">Download Related Files</button></span>
+
+                            <p style="margin:0; padding:0; padding-top:1em;">
+                                <span style="font-size: 14px;color: #0ca90c;">
+                                    <strong>Permanent URL : </strong>
+                                </span>
+                                <span style=" margin-left: 1%;margin-right: 5%; font-weight: 900;"><a href="{{job_url}}">{{job_url}}</a></span>
+                            </p>
+                            
                        </div>
                    </div>
                 </div>
@@ -178,7 +186,7 @@
                                             </table>
                                             </div>
                                         </div>
-                                        <p>URL for JOB: {{job_url}}</p>
+                                        
                                     </div>
                                 </div>
                             <!--</div>-->

@@ -147,7 +147,7 @@ def job_output(job_id):
     """
     job = Job.query.get(job_id)
 
-    # added P Bills 5/2020
+    # modified P Bills 5/2020
     # to allow for login-less job retrieval, allow retrieval by key parameter (output/1040?key=abcdefg ) 
     # job can be views on two conditions : 
     #   a job key was sent and it's correct   OR 
@@ -635,7 +635,7 @@ def signature_upload_form():
     ### url and key for job
     # with a user id, can create a login-free access
     job_key = job.generate_key()
-    job_url = url_for('.job_output', _external = True, job_id=job.id, key = job_key)
+    job_url = url_for_job_output(job) # url_for('.job_output', _external = True, job_id=job.id, key = job_key)
     
     #### R command
     rscript = 'compute_sRGES_from_signatures.R'
@@ -651,7 +651,7 @@ def signature_upload_form():
         result = {"message": "Job submission error  {}".format(e), "category": "error" }
         return json.dumps(result)
 
-    job.update(commit=True, status=6) # set to 6 for now to allow viewing output
+    job.update(commit=True, is_save = True, status=6) # set to 6 for now to allow viewing output
     db.session.commit()
 
     # since post is called by JS, render job submission info html and return for inserting into page 
@@ -702,4 +702,4 @@ def update_job_status(job_id, status):
 ### URL to view job output without logging in
 def url_for_job_output(job):
     # TODO use url_for properly here 
-    return url_for('.job_output', job_id=job.id, key = job.generate_key())
+    return app.config['BASE_URL'] + url_for('.job_output', job_id=job.id, key = job.generate_key())
