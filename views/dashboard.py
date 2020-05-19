@@ -4,7 +4,7 @@ from datetime import datetime
 from os import walk, makedirs, chmod
 from os.path import join, splitext, exists, dirname
 from app import app, before_request, db
-from flask import Blueprint, render_template, request, g, flash, session, url_for, redirect
+from flask import Blueprint, render_template, request, g, flash, session, url_for, redirect, make_response
 from flask_login import login_user
 from models.dashboard import FEATURES, get_sites, get_metastatics, get_grades, get_stages, Job, JobDetails, STATUS
 from models.profile import User, generate_password, check_password
@@ -635,7 +635,7 @@ def signature_upload_form():
     ### url and key for job
     # with a user id, can create a login-free access
     job_key = job.generate_key()
-    job_url = url_for('.job_output', job_id=job.id, key = job_key)
+    job_url = url_for('.job_output', _external = True, job_id=job.id, key = job_key)
     
     #### R command
     rscript = 'compute_sRGES_from_signatures.R'
@@ -644,29 +644,60 @@ def signature_upload_form():
 
     try:
         pid = subprocess.Popen(cmd).pid
-        print "submitted cmd {} with pid ".format(cmd, pid)
+        print "submitted cmd {} with pid {}".format(cmd, pid)
+        pass
 
     except Exception as e:
-        result = {"message": "When Exception {}".format(e), "category": "error" }
+        result = {"message": "Job submission error  {}".format(e), "category": "error" }
         return json.dumps(result)
-
-    # else:
-    #     result = {"message": "Invalid data please generate job again", "category": "error"}
-    #     return json.dumps(result)
-
-    result = {"message": "Job saved successfully", "category": "success", 'cmd' : cmd, 'jobid': job.id}
-
 
     job.update(commit=True, status=6) # set to 6 for now to allow viewing output
     db.session.commit()
-    # show user job submission info
-    # TODO wrap in ajax, change form to submit via jquery
-    return render_template('dashboard/signature_upload_job.html', job_key = job_key, job_url = job_url, job_id=job.id, job=job, jobdetails=jobdetails, cmd=cmd)
+
+    # since post is called by JS, render job submission info html and return for inserting into page 
+    headers = {'Content-Type': 'text/html'}
+    return make_response(render_template('dashboard/signature_upload_result.html', job_url = job_url, job_id=job.id, cmd=cmd),200,headers)
+    # return json.dumps(result)
 
 
-# @dashboardRoute.route('/job/<job_id>/update<status>', methods=["POST"])
-# def update_job_status(job_id, status):
-#     pass
+
+@dashboardRoute.route('/job/<job_id>/status/<status>', methods=["POST"])
+def update_job_status(job_id, status):
+    """DRAFT WIP
+    this is an api call to update the job's status
+    given the job's key (or a complete URL) can set status to 6 (completed)
+    example url would be http://octad.org/job/999/update/6?key=abcdef12345 
+    Note this is a post but any posted data is ignored, 
+    all data is in the URL to make it easy 
+    
+    if we send R the URL as a parameter, Call this from R with the httr package
+       
+       success_url=args[5]  # eg. "http://localhost:5000/job/1105/status/6?key=703cfd32716aeea94a2c51d260195e26"
+       # process stuff successfully 
+       resp = httr::POST(success_url)
+       status = content(resp)
+       # check that status was updated correctly
+    """
+
+    job_key = request.args.get('key', default = '', type = str)
+    if not job_key:
+        resp = {"status":""}
+
+    #TODO validate status value
+        
+    job = Job.query.get(job_id)
+    if job:
+        if job.generate_key() == job_key:
+            status = int(status)
+            job.status = status
+            job.save()
+            return json.dumps({"status":str(status)}) 
+        else:
+            # incorrect key
+            return json.dumps({"status":""}) 
+    else:
+        return json.dumps({"status":""})
+
 
 ### URL to view job output without logging in
 def url_for_job_output(job):

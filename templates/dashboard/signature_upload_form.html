@@ -32,7 +32,7 @@
                                 <h3><span class = "boldheader">Upload Signature File</span></h3>
                             <!-- </div> -->
  
-                            <form class="form-horizontal" enctype=multipart/form-data action="{{ url_for('dashboard.signature_upload_form') }}" method="post">
+                            <form id="uploadForm" class="form-horizontal" enctype=multipart/form-data action="{{ url_for('dashboard.signature_upload_form') }}" method="post">
                                 <fieldset>                                    
                                 <div class="form-group">
                                     <label class="control-label col-sm-2" for="file">Signature File:</label>
@@ -87,7 +87,8 @@
                                 </div>
                                 </fieldset>
                             </form>
-
+                            <hr/>
+                            <div id="result" class="well col-sm-8"></div>
                         </div>
                     </div>
                 <!-- </div> -->
@@ -97,7 +98,39 @@
     </div>
       {% include 'base/js_links.html' %}
 
+    <script>
+        // Attach a submit handler to the form
+        $('#result').hide()
 
-      {# TODO make form submit via JS, modal pop-up confirming job submission, if no user id (anonymous), then give instructions for retriving job #}
+        var showresult = function(html){
+            $('#result').empty().append(html).show();
+        }
+
+        $('#uploadForm').submit(function (e) {
+            e.preventDefault();
+            var url = this.action;
+            console.log(url);
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: new FormData(this),
+                processData: false,
+                contentType: false,
+                success: function (returnedHtml) {
+                    console.log('success job submit');
+                    showresult(returnedHtml);
+                    swal("Compute Job submitted");
+                }
+            });
+        });
+    </script>
 </body>
+<template id="results_template">
+    <a href="#" class="list-group-item">
+        <div class="image">
+            <img src="" />
+        </div>
+        <p class="list-group-item-text"></p>
+    </a>
+</template>
 </html>
