@@ -301,10 +301,11 @@ def check_pdf(job_id):
 
 def check_JobComplete(job_id):
 	stat_path = app.config['APPLICATION_ROOT'] + '/static/data/' + str(job_id) + '/'
+	file_name_to_check = "sRGES" # "drug_sensitivity_insilico_results"
 	flag = False
 	for root, dirs, files in walk(stat_path):
 		for file in files:
-			if file.startswith("drug_sensitivity_insilico_results"):
+			if file.startswith():
 				flag = True
 	return flag
 
