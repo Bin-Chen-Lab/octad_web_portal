@@ -43,7 +43,6 @@
 			padding: 10px !important;
 		}
 
-
 	</style>
 
 </head>
@@ -59,14 +58,9 @@
 
 		<div id="page-wrapper" class="gray-bg sideNavBody"><!-- btmNavBody -->
 
-			
 			<div class="wrapper wrapper-content full-height">
 
-					<!-- loading animation shown on intial page load only -->
-					<div id="page-loader" style="height:100%;display:none;">
-						<img src="/static/img/ajax-loader.gif"style="margin: 15% 10% 10% 48%"></div>
-
-					<div id="wrapper">
+				<div id="wrapper">
 
 					<center>
 					{% with messages = get_flashed_messages(with_categories=true) %}
@@ -2014,10 +2008,6 @@
 
 				onInit: function (event, currentIndex, newIndex){
 
-					// show the loader while the javscript loads 
-					$("#page-loader").show();
-
-
 					<!--var jobId = $("#job_id")[0].value;-->
 					<!--var jobId = 123;-->
 					<!--loadSingnatureCsv(jobId);-->
@@ -2280,10 +2270,6 @@
 					}
 					if (currentIndex >= 2 ){
 					}
-
-
-					// turn off the loader now that the step has finished initializing
-					$("#page-loader").hide();
 
 				},
 
