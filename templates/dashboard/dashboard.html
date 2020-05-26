@@ -2,7 +2,7 @@
 <html>
 
 <head>
-<!-- Global site tag (gtag.js) - Google Analytics -->
+<!-- Global site tag (gtag.js) - Google Analytics --> 
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-142111749-1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -11,7 +11,10 @@
 
   gtag('config', 'UA-142111749-1');
 </script>
-    
+		<div id="page-loader" style="height:100%;display:none;"><img src="/static/img/ajax-loader.gif"
+				style="margin: 15% 10% 10% 48%"></div>
+		<div id="wrapper">
+
 <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OCTAD:Open Cancer Therapeutic Discovery</title>
@@ -44,10 +47,20 @@
 
 
 	</style>
+
+	<script>
+		document.onreadystatechange = function () {
+				var state = document.readyState
+				if (state == 'interactive') {
+					$("#page-loader").show();
+				} else if (state == 'complete'){
+					$("#page-loader").hide();
+				}
+			};
+	</script>
 </head>
 
 <body class=""><!-- mini-navbar -->
-    <div id="wrapper">
     	{% include 'base/navBar.html' %}
 
         <div class="navbar-header navToggleBtn">
@@ -57,8 +70,17 @@
         {% include 'base/header.html' %}
 
 		<div id="page-wrapper" class="gray-bg sideNavBody"><!-- btmNavBody -->
+
+			
 			<div class="wrapper wrapper-content full-height">
-				<center>
+
+					<!-- loading animation shown on intial page load only -->
+					<div id="page-loader" style="height:100%;display:none;">
+						<img src="/static/img/ajax-loader.gif"style="margin: 15% 10% 10% 48%"></div>
+
+					<div id="wrapper">
+
+					<center>
 					{% with messages = get_flashed_messages(with_categories=true) %}
 					{% if messages %}
 						{% for category, message in messages %}
@@ -1626,10 +1648,10 @@
 			});
 
 			function caseTableLoad() {
-				<!--$.blockUI({ message: '<div class="full-width"><img src="/static/img/ajax-loader.gif" /></div> ' });-->
+				$.blockUI({ message: '<div class="full-width"><img src="/static/img/ajax-loader.gif" /></div> ' });
 				$('#casesamplemaindiv').css("display","none");
 				$('#caseSample').DataTable({
-					"ajax": "{{ url_for('api.sampleApi1') }}",
+					"ajax": "{{ url_for('api.sampleApi1') }}",    
 					"lengthMenu": [[5, 25, 50, -1], [5, 25, 50, "All"]],
 					"ordering" : false,
 					"searching" : true,
@@ -3953,7 +3975,6 @@
 					return;
 				}
 			});
-
 
 			$("#caserefbt").on('click', function(){
 				//e.preventDefault();
