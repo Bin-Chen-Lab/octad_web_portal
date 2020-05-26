@@ -7,6 +7,11 @@
     <title>Octad</title>
 
     {% include 'base/css_links.html' %}
+    <style>
+      #faq h3 {
+
+      }
+    </style>
 </head>
 
 <body class=""><!-- mini-navbar -->
@@ -24,198 +29,136 @@
         <div class="wrapper wrapper-content full-height">
           <div class="row m-n">
             <div class="col-lg-12" style="padding:0;">
-              <div class="ibox ">
-                <div class="ibox-title">
+              <div class="ibox " id="faq">
+                <div class="ibox-title"><h2>Octad Portal Frequently Asked Questions <!-- v180802 --></h2></div>
 
-<!--TEXT BEGIN FOR FAQ SECTION-->
-<!--VERSION-->
-<p><span class="boldheader">Octad Portal FAQs- v180801</span></p>
-<p><span></span></p>
+                <!--TEXT BEGIN FOR FAQ SECTION-->
+              <div class="ibox-content">
+                  <h3>Main Idea</h3>
+                  <p><strong>What is sRGES?</strong></p>
+                  <p>RGES (Reversal Gene Expression Score), a measure modified from the connectivity score developed in other studies. To
+                    compute the RGES score, we first rank genes based on their expression values in each drug signature. An enrichment
+                    score/s for each set of up- and down-regulated disease genes are computed separately using a Kolmogorov–Smirnov-like
+                    statistic, followed by the merge of scores from both sides (up/down). The score is based on the amount to which the
+                    genes (up or down-regulated) at either the top or bottom of a drug-gene list ranked by expression change after drug
+                    treatment. One compound may have multiple available expression profiles due to having been tested in various cell
+                    lines, drug concentrations, treatment durations, or even different replicates, resulting in multiple RGES for one
+                    drug-disease prediction. Therefore, we developed a summarization method to mitigate bias and to compute a score
+                    representative of the overall reversal potency of a compound to particular cancer. We termed this score summarized
+                    RGES (sRGES). </p>
+                  <div style="display:block; height: 6em;"><img src="{{ url_for('static', filename='img/sRGES_formula.png') }}" height=100%></div>
 
-<!--*********-->
-<!--MAIN IDEA-->
-<!--*********-->
-<p><span class="boldheader">Main Idea</span></p>
-
-<!--1.) What does the acronym octad stand for?-->
-<span class="underline">What does the acronym OCTAD stands for?</span>
-
-<!--Open Cancer Therapuetic Discovery-->
-<p><span>Open Cancer TherApeutic Discovery</span></p>
-<p><span></span></p>
-
-<!--2.) What does OCTAD do?-->
-<span class="underline">What does OCTAD do?</span>
-<p><span>The goal of OCTAD is to expedite cancer research for therapies. OCTAD allows users to select their cancer or subtype of interest and see which genes and pathways are affected due to the disease. With the LINCS database, we can explore further by predicting potential drugs or targets that may be beneficial against that specific cancer (PMID:28699633). &nbsp;Further evaluation of the drug hits may require bench research for efficacy and/or toxicity testing. Because it is a predictive model, use at your own risk. </span></p>
-<p><span></span></p>
-
-<!--3.) How do I use OCTAD?-->
-<span class="underline">How do I use OCTAD?</span>
-                    <p><span>OCTAD is very easy to use. &nbsp;After picking your cancer and filtering down for desired features, you can either manually choose your control samples (coming soon) or use the given default choice that is most correlated to your cancer tissue type. Choose a method of differential expression in the Signature tab and filter down results with the adjusted P value and the number of fold change seen between the case and control samples. Under the Drugs tab, you can choose which database you want to evaluate the potential to reverse the disease signature expression. &nbsp;You can either compute disease signature earlier or submit the job directly. OCTAD will compute disease signature if it detects there is no signature computed. It takes a few minutes to compute disease signature and &nbsp;about ten minutes to run drug prediction. You must be logged in to run drug prediction. When the job is complete, an email will be sent to you. A full summary report will be available to review and all data files (description of datafiles is available <a href="https://github.com/Bin-Chen-Lab/octad_desktop/tree/master/example_results">here</a>) can be downloaded after the job is complete. You can manage your jobs and check job status by going to the jobs page.</span></p>
-<p><span></span></p>
-
-<!--*********-->
-<!--DATABASES-->
-<!--*********-->
-<p class="c6"><span class="boldheader">Databases</span></p>
-
-<!--4.) What are the database sources in OCTAD?-->
-<span class="underline">What are the database sources used in OCTAD?</span>
-<p><span>OCTAD uses patient samples from GTEx, TCGA, St. Jude Hospital, MET 500, and TARGET. &nbsp;Please see our Dataset tab for more information about each data source.
-&nbsp;Our database currently comprises a total of 19128 normal and tumor samples.  </span></p><p><span></span></p>
-
-<!--5.) Will the databases be continually updated on OCTAD? Will more samples be added into the database later?-->
-<span class="underline">Will the databases be continually updated on OCTAD? Will more samples be added into the database later on?</span>
-<p><span class>Yes. In future version, we plan to include more patient samples. Please contact us if you have datasets you would like to add into OCTAD.</span></p>
-<p><span></span></p>
-
-<!--6.) How frequent do you update the database?-->
-<span class="underline">How frequent do you update the database?</span>
-<p><span>Depends. We have covered the majority of cancers, we will update new large datasets when they are available.</span></p>
-<p><span></span></p>
-
-<!--7.) Are there patterns among the naming samples of IDs?-->
-<span class="underline">Are there patterns to the naming of sample IDs?</span></li>
-<p><span>Yes, there are a few patterns. Note that these are the original sample IDs from our sources which have their own naming system. &nbsp;For example, from the GTEx source, the samples are name as GTEX-XXXXX-YYYY-SM-ZZZZZ. XXXXX is the patient ID, YYYY is the code for the tissue, and ZZZZZ is the sample aliquot used for sequencing. &nbsp;Please refer to the dataset tab for more info and links to each data source.</span></p>
-<p><span></span></p>
-
-<!--8.) Is there a way to differentiate between-->
-<span class="underline">Is there a way to differentiate live and postmortem samples?</span>
-<p><span>No, OCTAD does not list which biopsies are postmortem samples. &nbsp;However, the original data sources have that information. &nbsp;GTEx samples are postmortem samples, except some whole blood samples which were collected prior to death. </span></p>
-<p><span></span></p>
-
-<!--**********************-->
-<!--SAMPLE SELECTION TOOLS-->
-<!--**********************-->
-<p><span class="boldheader">Sample Selection Tabs</span></p>
-
-<!--9.) When is the sample size too low to be considered?-->
-<span class="underline">When is the sample size too low?</span>
-<p><span>There is no absolute threshold. If the sample size is low, you may not be able to get signature genes that warrant a good prediction. &nbsp;</span></p>
-<p><span></span></p>
-
-<!--10.) After filtering the database for samples, my sample size n is less than 5, what should I do?-->
-<span class="underline">After filtering the database for samples, my sample size n is less than 5, what should I do?</span>
-<p><span>If you could not get enough signature genes (&gt; 100), you may need to change your hypothesis.</span></p>
-<p><span></span></p>
-
-<!--11.) Adding additional mutation features like EGFR, IDH1, ect will give out a NA box. What does the choice NA...-->
-<span class="underline">Where are the genomic features (mutation, copy number variation) from?</span>
-<p><span>We compiled the list from cbioportal. Currently we only cover TCGA samples and include others soon.</span></p>
-<p><span></span></p>
-
-<!--12.)How to I interpret the Cancer plot?-->
-<span class="underline">How do I interpret the cancer plot? What are the X and Y axes?</span>
-<p><span>This feature is deprecated. This t-SNE plot is to show similarity between samples. &nbsp;The closer the points are, the more similar they are in mRNA expression.  </span></p>
-<p><span></span></p>
-
-<!--13.) If the distance between points on the t-SNE plot shows similarity, why...-->
-<span class="underline">If the distance between points on the t-SNE plot shows similarity, why do I have a few points relatively far from the main island, even though they are same type of tissue?</span>
-<p><span>This feature is deprecated. Those points are either outliers or the samples are mislabeled in the data source. You can remove that sample from your sample set if it is deemed necessary.</span></p>
-<p><span></span></p>
-
-<!--14.) I have my own control samples. How do I use my own dataset?-->
-<span class="underline">&nbsp;I have my own control samples. How do I use my own dataset?</span>
-<p><span>Currently, we DO NOT support users to upload their own data. This function will become available in the next version.</span></p>
-<p><span></span></p>
-
-<!--15.) Can I compare two samples that are not the cancer-normal pairing?-->
-<span class="underline">Can I compare two sample types that are not the cancer-normal pairing? Ie. How would I explore the different expression between two cancer types such as colon cancer and rectum cancer? How do I compare adjacent tissue with normal tissue?</span>
-<p><span>The portal does not support at this moment. Alternatively, you make a prediction for each cancer or subtype and then merge the results.</span></p>
-<p><span></span></p>
-
-<!--16.) How do I manually choose my samples?-->
-<span class="underline">How do I manually choose my samples?</span>
-<p><span>In the sample list, you can manually select samples by checking the ones you want and unchecking the ones you want to exclude in your set.</span></p>
-
-<!--17.) How do I select more than one sample for the control sample?-->
-<span class="underline">How do I select more than one type of tissue for control samples?</span>
-<p><span>This feature is not supported in the web portal. Please try OCTAD desktop version which provides more flexibility to choose samples.</span></p>
-<p><span></span></p>
-
-<!--*************-->
-<!--SIGNATURE TAB-->
-<!--*************-->
-<p><span class="boldheader">Signature Tab</span></p>
-
-<!--18.) What is the difference between EdgeR and Limma under DE(differential expression) method?-->
-<span class="underline">What is the difference between edgeR and Limma under DE (differential expression) method?</span>
-<p><span>They used different methods to compute DE. Please refer to their publications for further explanation.</span></p>
-<p><span></span></p>
-
-<!--*********-->
-<!--DRUGS TAB-->
-<!--*********-->
-<p><span class="boldheader">Drugs Tab</span></p>
-
-<!--19.) What are the differences bewtween LINCS database L1000 and L1000 All?-->
-<span class="underline">What are the differences between the LINCS databases L1000 and L1000 All?</span><p><span>L1000 uses only 978 landmark genes in the prediction (other 22 genes are used as control). L1000 All include the imputed expression of the remaining transcriptome. By default, L1000 is used.</span></p>
-<p><span></span></p>
-
-<!--20.) What number should I put in for "max genes on one side"? What does it mean?-->
-<span class="underline">What number should I input for &ldquo;max genes on One side&rdquo;? And what does it mean?</span>
-<p><span>Sometimes, we have to limit the number of disease signature to compute reversal correlation. Empirical analysis suggested 50 is good for L1000.</span></p>
-<p><span></span></p>
-
-<!--***********-->
-<!--RESULTS TAB-->
-<!--***********-->
-<p><span class="boldheader">Results</span></p>
-
-<!--21.) How long does it take for OCTAD to send me the results?-->
-<span class="underline">How long does it take for OCTAD to email the results of a job?</span>
-<p><span>About 10-20mins.</span></p>
-<p><span></span></p>
-
-<!--*************-->
-<!--MISCELLANEOUS-->
-<!--*************-->
-<p><span class="boldheader">Miscellaneous</span></p>
-
-<!--22.) I am interested in being apart of your open project. Does your group accept any volunteers-->
-<span class="underline">I am interested in being part of your open project. Does your group accept volunteers?</span>
-<p><span>Yes. If you are interested in volunteering please conatact us at
-octad.contact@gmail.com.</span></p>
-<p><span></span></p>
-
-<!--23.) How do I support the efforts of OCTAD?-->
-<span class="underline">How do I support the efforts of OCTAD?</span>
-<p><span>Please contact us via octad.contact@gmail.com.</span></p>
-<p><span></span></p>
-
-<!--24.) I have RNAseq data. Can I add tissue samples to your database?-->
-<span class="underline">How can I add RNAseq data to your tissue sample database?</span>
-<p><span>Yes, but we have to do it manually.</span></p>
-<p><span></span></p>
-
-<!--25.) Can I have access to raw RNAseq data?-->
-<span class="underline">Can I have access to the raw RNA sequence data?</span>
-<p><span>As our pipeline uses sources from other databases, we do not have the raw sequences.</span></p>
-<p><span></span></p>
-
-<!--26.) What browsers does OCTAD support?-->
-<span class="underline">What browsers does OCTAD support?</span>
-<p><span>Chrome, Safari, Microsoft Edge, and Mozilla Firefox. Octad is currently unavailable on mobile devices.</span></p>
-<p><span></span></p>
-
-<!--27.) Can I use the results and images in my paper? If yes, how do I properly cite the use of OCTAD-->
-<span class="underline">Can I use the results and images in a academic paper?</span>
-<p><span>Yes. The job id is the permanent id.</span></p>
-<p><span></span></p>
-
-<!--28.) What is the desktop version of OCTAD and where can I access that?-->
-<span class="underline">What is the desktop version of OCTAD and where can it be accessed?</span>
-<p><span>The backend of the web and desktop versions is done with the R statistical
-programming language. The desktop version provides more flexibility than the web version.
-It is a open source project that still is under development. If you have programming
-knowledge and would like to contribute then check out the GitHub repository at
-</span><span>
-<a href="https://www.google.com/url?q=https://github.com/Bin-Chen-Lab/octad_desktop&amp;
-sa=D&amp;ust=1536359584269000">https://github.com/Bin-Chen-Lab/octad_desktop</a></span><span>.</span></p>
-<!--END TEXT FOR FAQ SECTION-->
-
-		 </div>
-                <div class="ibox-content"></div>
+                  <p>where N is the number of drug profiles. f(dose(i), time(i)) was estimated by a computational model. Correlation
+                    between cell(i) and tumour samples was estimated as the average of correlations between the cell line and individual
+                    tumours.</p>
+                  <p>For more information, please refer to the original paper: <a href='https://www.nature.com/articles/ncomms16022'>Chen,
+                      B., Ma, L., Paik, H., Sirota, M., Wei, W., Chua, M. S., ... &amp; Butte, A. J. (2017). Reversal of cancer gene
+                      expression correlates with drug efficacy and reveals therapeutic targets. Nature communications, 8(1), 1-12.</a></p>
+                  <p><strong>What does the acronym OCTAD stands for?</strong></p>
+                  <p>Open Cancer TherApeutic Discovery</p>
+                  <p><strong>What does OCTAD do?</strong></p>
+                  <p>The goal of OCTAD is to expedite cancer research for therapies. OCTAD allows users to select their cancer or subtype
+                    of interest and see which genes and pathways are affected due to the disease. With the LINCS database, we can explore
+                    further by predicting potential drugs or targets that may be beneficial against that specific cancer (PMID:28699633).
+                    Further evaluation of the drug hits may require bench research for efficacy and/or toxicity testing. Because it is a
+                    predictive model, use at your own risk.</p>
+                  <p><strong>How do I use OCTAD?</strong></p>
+                  <p>OCTAD is very easy to use. After picking your cancer and filtering down for desired features, you can either manually
+                    choose your control samples (coming soon) or use the given default choice that is most correlated to your cancer
+                    tissue type. Choose a method of differential expression in the Signature tab and filter down results with the adjusted
+                    P value and the number of fold change seen between the case and control samples. Under the Drugs tab, you can choose
+                    which database you want to evaluate the potential to reverse the disease signature expression. You can either compute
+                    disease signature earlier or submit the job directly. OCTAD will compute disease signature if it detects there is no
+                    signature computed. It takes a few minutes to compute disease signature and about ten minutes to run drug prediction.
+                    You must be logged in to run drug prediction. When the job is complete, an email will be sent to you. A full summary
+                    report will be available to review and all data files (description of datafiles is available here) can be downloaded
+                    after the job is complete. You can manage your jobs and check job status by going to the jobs page.</p>
+                  <h3>Databases</h3>
+                  <p><strong>What are the database sources used in OCTAD?</strong></p>
+                  <p>OCTAD uses patient samples from GTEx, TCGA, St. Jude Hospital, MET 500, and TARGET. Please see our Dataset tab for
+                    more information about each data source. Our database currently comprises a total of 19128 normal and tumor samples.
+                  </p>
+                  <p><strong>Will the databases be continually updated on OCTAD? Will more samples be added into the database later
+                      on?</strong></p>
+                  <p>Yes. In future version, we plan to include more patient samples. Please contact us if you have datasets you would
+                    like to add into OCTAD.</p>
+                  <p><strong>How frequent do you update the database?</strong></p>
+                  <p>Depends. We have covered the majority of cancers, we will update new large datasets when they are available.</p>
+                  <p><strong>Are there patterns to the naming of sample IDs?</strong></p>
+                  <p>Yes, there are a few patterns. Note that these are the original sample IDs from our sources which have their own
+                    naming system. For example, from the GTEx source, the samples are name as GTEX-XXXXX-YYYY-SM-ZZZZZ. XXXXX is the
+                    patient ID, YYYY is the code for the tissue, and ZZZZZ is the sample aliquot used for sequencing. Please refer to the
+                    dataset tab for more info and links to each data source.</p>
+                  <p><strong>Is there a way to differentiate live and postmortem samples?</strong></p>
+                  <p>No, OCTAD does not list which biopsies are postmortem samples. However, the original data sources have that
+                    information. GTEx samples are postmortem samples, except some whole blood samples which were collected prior to death.
+                  </p>
+                  <p><strong>Sample Selection Tabs</strong>
+                    When is the sample size too low?</p>
+                  <p>There is no absolute threshold. If the sample size is low, you may not be able to get signature genes that warrant a
+                    good prediction. </p>
+                  <p><strong>After filtering the database for samples, my sample size n is less than 5, what should I do?</strong></p>
+                  <p>If you could not get enough signature genes (&gt; 100), you may need to change your hypothesis.</p>
+                  <p><strong>Where are the genomic features (mutation, copy number variation) from?</strong></p>
+                  <p>We compiled the list from cbioportal. Currently we only cover TCGA samples and include others soon.</p>
+                  <p><strong>How do I interpret the cancer plot? What are the X and Y axes?</strong></p>
+                  <p>This feature is deprecated. This t-SNE plot is to show similarity between samples. The closer the points are, the
+                    more similar they are in mRNA expression.</p>
+                  <p>If the distance between points on the t-SNE plot shows similarity, why do I have a few points relatively far from the
+                    main island, even though they are same type of tissue?</p>
+                  <p>This feature is deprecated. Those points are either outliers or the samples are mislabeled in the data source. You
+                    can remove that sample from your sample set if it is deemed necessary.</p>
+                  <p> <strong>I have my own control samples. How do I use my own dataset?</strong></p>
+                  <p>Currently, we DO NOT support users to upload their own data. This function will become available in the next version.
+                  </p>
+                  <p><strong>Can I compare two sample types that are not the cancer-normal pairing? Ie. How would I explore the different
+                      expression between two cancer types such as colon cancer and rectum cancer? How do I compare adjacent tissue with
+                      normal tissue?</strong></p>
+                  <p>The portal does not support at this moment. Alternatively, you make a prediction for each cancer or subtype and then
+                    merge the results.</p>
+                  <p><strong>How do I manually choose my samples?</strong></p>
+                  <p>In the sample list, you can manually select samples by checking the ones you want and unchecking the ones you want to
+                    exclude in your set.</p>
+                  <p><strong>How do I select more than one type of tissue for control samples?</strong></p>
+                  <p>This feature is not supported in the web portal. Please try OCTAD desktop version which provides more flexibility to
+                    choose samples.</p>
+                  <h3><strong>Signature Tab</strong></h3>
+                  <p><strong>What is the difference between edgeR and Limma under DE (differential expression) method?</strong></p>
+                  <p>They used different methods to compute DE. Please refer to their publications for further explanation.</p>
+                  <h3><strong>Drugs Tab</strong></h3>
+                  <p><strong>What are the differences between the LINCS databases L1000 and L1000 All?</strong></p>
+                  <p>L1000 uses only 978 landmark genes in the prediction (other 22 genes are used as control). L1000 All include the
+                    imputed expression of the remaining transcriptome. By default, L1000 is used.</p>
+                  <p><strong>What number should I input for “max genes on One side”? And what does it mean?</strong></p>
+                  <p>Sometimes, we have to limit the number of disease signature to compute reversal correlation. Empirical analysis
+                    suggested 50 is good for L1000.</p>
+                  <h3><strong>Results</strong></h3>
+                  <p><strong>How long does it take for OCTAD to complete the results of a job?</strong></p>
+                  <p>About 10-20mins.</p>
+                  <h3>Miscellaneous</h3>
+                  <p><strong>I am interested in being part of your open project. Does your group accept volunteers?</strong></p>
+                  <p>Yes. If you are interested in volunteering please conatact us at <a href='mailto:octad.contact@gmail.com'
+                      target='_blank' class='url'>octad.contact@gmail.com</a>.</p>
+                  <p><strong>How do I support the efforts of OCTAD?</strong></p>
+                  <p>Please contact us via <a href='mailto:octad.contact@gmail.com' target='_blank'
+                      class='url'>octad.contact@gmail.com</a>.</p>
+                  <p><strong>How can I add RNAseq data to your tissue sample database?</strong></p>
+                  <p>Yes, but we have to do it manually.</p>
+                  <p><strong>Can I have access to the raw RNA sequence data?</strong></p>
+                  <p>As our pipeline uses sources from other databases, we do not have the raw sequences.</p>
+                  <p><strong>What browsers does OCTAD support?</strong></p>
+                  <p>Chrome, Safari, Microsoft Edge, and Mozilla Firefox. Octad is currently unavailable on mobile devices.</p>
+                  <p><strong>Can I use the results and images in a academic paper?</strong></p>
+                  <p>Yes. The job id is the permanent id.</p>
+                  <p><strong>What is the desktop version of OCTAD and where can it be accessed?</strong></p>
+                  <p>The backend of the web and desktop versions is done with the R statistical programming language. The desktop version
+                    provides more flexibility than the web version. It is a open source project that still is under development. If you
+                    have programming knowledge and would like to contribute then check out the GitHub repository at <a
+                      href='https://github.com/Bin-Chen-Lab/octad_desktop' target='_blank'
+                      class='url'>https://github.com/Bin-Chen-Lab/octad_desktop</a>.</p>
+              </div>
+            <!--END TEXT FOR FAQ SECTION-->
+              
               </div>
             </div>
           </div>
