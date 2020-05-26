@@ -11,9 +11,7 @@
 
   gtag('config', 'UA-142111749-1');
 </script>
-		<div id="page-loader" style="height:100%;display:none;"><img src="/static/img/ajax-loader.gif"
-				style="margin: 15% 10% 10% 48%"></div>
-		<div id="wrapper">
+
 
 <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -48,16 +46,6 @@
 
 	</style>
 
-	<script>
-		document.onreadystatechange = function () {
-				var state = document.readyState
-				if (state == 'interactive') {
-					$("#page-loader").show();
-				} else if (state == 'complete'){
-					$("#page-loader").hide();
-				}
-			};
-	</script>
 </head>
 
 <body class=""><!-- mini-navbar -->
@@ -2025,6 +2013,11 @@
 				{% endif %}
 
 				onInit: function (event, currentIndex, newIndex){
+
+					// show the loader while the javscript loads 
+					$("#page-loader").show();
+
+
 					<!--var jobId = $("#job_id")[0].value;-->
 					<!--var jobId = 123;-->
 					<!--loadSingnatureCsv(jobId);-->
@@ -2287,6 +2280,11 @@
 					}
 					if (currentIndex >= 2 ){
 					}
+
+
+					// turn off the loader now that the step has finished initializing
+					$("#page-loader").hide();
+
 				},
 
 				onStepChanging: function (event, currentIndex, newIndex){
