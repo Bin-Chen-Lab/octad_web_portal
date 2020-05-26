@@ -8,7 +8,7 @@ from flask import Blueprint, render_template, request, g, flash, session, url_fo
 from flask_login import login_user
 from models.dashboard import FEATURES, get_sites, get_metastatics, get_grades, get_stages, Job, JobDetails, STATUS
 from models.profile import User, generate_password, check_password
-from views.custom_api import check_JobComplete, check_pdf
+from views.custom_api import check_JobComplete, check_pdf, createJobZip
 import json, re
 from flask_login import login_required
 rscript_path = app.config['RSCRIPT_PATH']
@@ -196,9 +196,9 @@ def job_output(job_id):
     # if job.status < 6:
     #     return redirect(url_for('dashboard.job_history'))
 
-    if check_JobComplete(job):
+    print("checking/creating zip file for job")
+    if check_JobComplete(job.id):
         # if job has written sRGES file, create a zip file if one does not exist
-        print("checking/creating zip file for job")
         createJobZip(job)
         is_complete = True
         # update job status here?
@@ -733,41 +733,3 @@ def url_for_job_output(job):
     return app.config['BASE_URL'] + url_for('dashboard.job_output', job_id=job.id, key = job.generate_key())
 
 
-# need to call for jobs without logged in users id (function above runs for all jobs)
-def createJobZip(job):
-    """ create zip file for a single job
-    Does not check for job completedness and does not overwrite any existing zip file
-    input: job object
-    output : T/F if completed successfully 
-    This was created for use with signature-file only upload jobs
-    P. Bills MSU IT Services. May 2020
-    """
-    stat_folder = join(app.config['RREPO_OUTPUT'], str(job.id))
-
-    if not exists(stat_folder):
-        print("did not create zip file, folder for job not found".format(stat_folder))
-        return(False)
-
-    if not job.name:
-        print("job {} does not have a name, can't create zip file".format(job.id))
-        return(False)
-
-    file_name = job.name.replace(' ', '_') + '.zip'
-    file_path = join(stat_folder, file_name)
-    if (not exists(file_path) ):            
-        try:
-            fantasy_zip = ZipFile(file_path, 'w')
-            for folder, subfolders, files in walk(stat_folder):
-                for file in files:
-                    if file.endswith('.pdf') or file.endswith('.csv') or file.endswith('case_ids.txt') or file.endswith('control_ids.txt'):
-                        fantasy_zip.write(join(folder, file),
-                            relpath(join(folder, file), file_folder),
-                            compress_type=ZIP_DEFLATED)
-            fantasy_zip.close()
-            return True
-        except Exception as e:
-            print('error when making zip file {}'.format(e))
-            return(False)
-    else:
-        print("zip file {} for job {} exists, not overwriting".format(file_path, job.id))
-        return(True)
