@@ -3,7 +3,7 @@
 service mysql restart
 export FLASK_ENV=production
 export FLASK_RUN_PORT=80
-export APP_ROOT=/var/www/html/octad_web_portal_ads
+export APP_ROOT=/var/www/html/octad_web_portal
 export APP_CONFIG_FILE=$APP_ROOT/config/production.py
 
 
@@ -13,5 +13,5 @@ sudo systemctl restart nginx
 
 # To restart the server
 
-# export APP_ROOT=/var/www/html/octad_web_portal_ads
+# export APP_ROOT=/var/www/html/octad_web_portal
 # uwsgi --stop $APP_ROOT/octad.pid
