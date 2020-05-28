@@ -380,6 +380,7 @@
         "ajax": "{{ url_for('api.sampleCsvApi', job_id=job.id, name = 'approved_drugs') }}",
         "lengthMenu": [[5, 25, 50, -1], [5, 25, 50, "All"]],
         "searching" : true,
+        "order": [[ 4, "desc" ]],
     });
     <!-- END : Load the sRGES FD Aapproveddrugs CSV data -->
 
