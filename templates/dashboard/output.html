@@ -52,8 +52,10 @@
                             </span>
                             <span style=" margin-left: 1%;font-weight: 900;">{{ job.description }}</span>
                             <span style=" margin-left: 1%;font-weight: 900;">{{ job_status_name }}</span>
-                            <span style="float: right;"><button id="drugsFiles">Download Related Files</button></span>
-
+                            {% if is_complete %}
+                            {# only show download button is job is complete #}
+                                <span style="float: right;"><button id="drugsFiles">Download Related Files</button></span>
+                            {% endif %}
                             <p style="margin:0; padding:0; padding-top:1em;">
                                 <span style="font-size: 14px;color: #0ca90c;">
                                     <strong>Permanent URL : </strong>

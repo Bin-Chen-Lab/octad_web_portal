@@ -166,12 +166,10 @@ def job_output(job_id):
         print "Job with id {} not found".format(job_id)
         return redirect(url_for('dashboard.job_history'))
 
-    disease_name = job.jobs[0].disease_name
-    job_status_name = STATUS[job.status]
-
+    # allowing all jobs to be viewed (not just completed)
     # job = Job.query.filter(Job.id == job_id, Job.user_id == g.user.id).first()
-    if not job or job.status < 5: # 6
-        return redirect(url_for('dashboard.job_history'))
+    #if not job or job.status < 5: # 6
+    #    return redirect(url_for('dashboard.job_history'))
     file_name = job.name.replace(' ', '_') + '.zip'
     file_path = '/static/data/' + job_id + '/'
     signature_file = ''
@@ -179,7 +177,7 @@ def job_output(job_id):
     drug_file = ''
     drug_enricher = {}
 
-    #### I believe this is now incorrect...
+    
     # pdf_path = app.config['APPLICATION_ROOT'] + file_path
     pdf_path = join(r_output, str(job.id))
     print("checking path {} for output files...".format(pdf_path))
@@ -205,16 +203,24 @@ def job_output(job_id):
     #     return redirect(url_for('dashboard.job_history'))
 
     print("checking/creating zip file for job")
+    # added P Bills, IT Services 5/2020
+    # note that previously this page was only shown for 'complete' jobs 
+    # but now used for anonymous users so any state job can be displayed
+    # if complete, generate zip and update status 
     if check_JobComplete(job.id):
         # if job has written sRGES file, create a zip file if one does not exist
         createJobZip(job)
         is_complete = True
-        # update job status here?
+        # also updating job status 
+        if job.status < 6:
+            job.update(commit=True,status = 6)        
 
     else:
         print("job is not complete, not creating zip file")
         is_complete = False     
 
+    disease_name = job.jobs[0].disease_name
+    job_status_name = STATUS[job.status]
     # generates link to job that does not require log in
     job_url = url_for_job_output(job)  
 
@@ -653,7 +659,7 @@ def signature_upload_form():
             description=job_description,
             creationTime = job_timestamp,  
             is_save = True, 
-            status = 6)
+            status = 5)
         job.save() # save to db, assign id  
         # Create Minimal Job details record for signature-only anonymous jobs.  It will not include case or other data
         jobdetails = JobDetails(job_id = job.id, 
