@@ -60,6 +60,12 @@
 
 			<div class="wrapper wrapper-content full-height">
 
+				<!-- loading animation shown on intial page load only -->
+				<div id="page-loader" style="height:100%;display:none;">
+					<img src="/static/img/ajax-loader.gif" style="margin: 15% 10% 10% 48%">
+				</div>
+
+			
 				<div id="wrapper">
 
 					<center>
@@ -737,26 +743,23 @@
 											<label>Job Name<span style="color:red;">*</span></label>
 											{% if job %}
 											<input type="text" name="jobName" placeholder="Job Name" value="{{ job.name }}" class="form-control" TABINDEX=1 required>
+											<!-- note job_id input is present on parent form, which is concatenated to this form on submit -->
 											{% else %}
 											<input type="text" id="job_name" name="jobName" placeholder="Job Name" class="form-control" TABINDEX=1 required>
 											{% endif %}
 										</div>
 										<div class="form-group">
-											<label>Description</label>
+											<label>Description (optional)</label>
 											{% if job %}
 											<textarea name="description" placeholder="Description" class="form-control" TABINDEX=2>{{ job.description }} </textarea>
 											{% else %}
 											<textarea name="description" id="description" placeholder="Description" class="form-control" TABINDEX=2></textarea>
 											{% endif %}
 										</div>
-										{% if not g.user %}
+										{% if g.user %}
+										<input type="hidden" id="save_form_user_id" name="user_id" value="false">
 										<div class="form-group">
-											<label>Email id</label>
-											<input type="email" name="email" placeholder="Enter your email" class="form-control" TABINDEX=3 required>
-										</div>
-										<div class="form-group">
-											<label>Password</label>
-											<input type="password" name="password" placeholder="password" class="form-control" TABINDEX=4 required>
+											<p>Saving for account : {{ g.user }}</p>
 										</div>
 										{% endif %}
 										<input type="hidden" id="finishInfo" name="finishInfo" value="false">
@@ -774,6 +777,7 @@
                     </div>
                     <!--  save Popup  -->
 
+					
 					<!--  Summary Popup  -->
 					<div class="modal inmodal" id="summaryInfo" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog">
@@ -1583,8 +1587,30 @@
 
 		$(document).ready(function(){
 
+
 			$("#form").show()
 
+			$("#page-loader").show()
+
+			// added P. Bills, IT Services May 2020, options to use account or anonymous for saving job
+			// this enables/disables id/password fields in save form (modal)
+			// based on checkbox.   
+
+			// force initial state of this form (some browsers remember checkbox state)
+			$("#save_modal_use_email_checkbox").prop('checked',false);
+			$("#save_modal_email_input").prop("disabled", true);
+			$("#save_modal_password_input").prop("disabled", true);
+
+			$("#save_modal_use_email_checkbox").change(function () {
+				if ($(this).is(":checked")) {
+					$("#save_modal_email_input").prop("disabled", false);
+					$("#save_modal_password_input").prop("disabled", false);
+				} else {
+					$("#save_modal_email_input").prop("disabled", true);
+					$("#save_modal_password_input").prop("disabled", true);
+				}
+			});
+			
 			$('#savenproceed').on('click', function() {
 
 				if( $("#job_name").val() == '' ) {
@@ -1608,7 +1634,7 @@
 					$.post(formUrl, allData, function(result){
 						$("#saveInfo").modal('hide');
 						var next_url = result['next_url'];
-						var finishInfo = result['finishInfo'];
+						var finishInfo = result['finishInfo'];						
 						swal(result['category'])
 						 if (next_url && result['category'] == 'success'){
 							$("#job_id")[0].value = result['job_id'];
@@ -1618,7 +1644,10 @@
 								location.href = next_url
 							}
 							if (finishInfo == 'true'){
-								location.href = "{{ url_for('dashboard.job_history') }}"
+								// location.href = "{{ url_for('dashboard.job_history') }}"
+								// this is changed to the actual single job output view (even if there isn't any)
+								// to accommodate anonymous jobs, ie users who have not logged-in, there is no job history
+								location.href = result['finished_url'];
 							}
 						}
 						else{
@@ -1990,12 +2019,16 @@
 				   //control_plot();
 				});
 			}
+
+
+
 			var $stopChanging = false;
+
 			$("#form").steps({
 				bodyTag: "fieldset",
 				labels: {finish: "Submit"},
 				{% if job and (job.status == 0 or job.status == 1) %}
-					startIndex: 0,
+				startIndex: 0,
 				{% elif job and (job.status == 2 or job.status == 3) %}
 					startIndex: 1,
 				{% elif job and job.status == 4%}
@@ -3500,7 +3533,7 @@
 					$("fieldset[type='radio']").controlgroup();
 				}
 
-	};//FINISH CASE JS===================================================================================================
+	            };//FINISH CASE JS===================================================================================================
 
 				<!-- START : Feature filter for the Age  -->
 				function caseFilterTest() {
@@ -4165,8 +4198,13 @@
 				}
 			});
 
-		}); // End Document ready
+			$("#page-loader").hide();
 
+		}); 
+		// End Document ready
+
+	
+	
 		// ---- Add Child Row Table -------------------------------
 
 		function format2 ( d ) {
@@ -4195,10 +4233,7 @@
 				'</tr>'+
 			'</table>';
 		}
-
-
-
-
+		
 	</script>
 
 

@@ -221,12 +221,24 @@ def compute_control_samples():
 @dashboardRoute.route('/job/save', methods=["POST"])
 # @login_required
 def save_job():
+    """create new job, or update existing job, from Dashboard Form data
+    called by the "save" modal form on dashboard template
+    uses data from save form and entire dashboard form
+    """
+
     job_id = request.form.get('job_id', None)
-    if job_id < 0 or job_id == '':
+    print("job save for job id = {}".format(job_id))
+    if job_id < 0 or job_id == '' or job_id == None: 
+        # new job is needed.          
         job_id = Job.get_new_id()
+            # assigns current logged in user, if one
+            # creates job details record for this job
+
     job = Job.query.filter(Job.id == job_id).first()
     if job:
-        job_name = request.form.get('jobName', None)
+        # new: job name and description are optional.  
+        #    so set reasonable defaults when user does not provide them
+        job_name = request.form.get('jobName', "job {} started on {}".format(job.id, datetime.utcnow()))
         description = request.form.get('description', None)
         #disease_name = request.form.get('case_disease_name', None)
         disease_name = request.form.get('our_disease_list', None)
@@ -279,30 +291,49 @@ def save_job():
             status = 1
         else:
             status = job.status
-        if not g.user:
-            username = request.form['email']
-            password = request.form['password']
-            registered_user = User.query.filter_by(username=username).first()
-            if registered_user is None:
-                hashedPasswd = generate_password(password)
-                registered_user = User(username, hashedPasswd, 0, True)
-                registered_user.save()
-            elif not check_password(registered_user.password, password):
-                result = {"message": "Invalid credentials", "category": "error"}
-                return json.dumps(result)
-            if login_user(registered_user, remember=True):
-                session['user_id'] = registered_user.id
-                registered_user.update(commit=False, loginTime=datetime.utcnow())
-                g.user = registered_user
-                job.update(commit=False, user_id=registered_user.id, name=job_name, description=description, status=status, is_save=True)
-                db.session.commit()
+
+        # if not g.user:
+        #     username = request.form['email']
+        #     password = request.form['password']
+        #     registered_user = User.query.filter_by(username=username).first()
+        #     if registered_user is None:
+        #         hashedPasswd = generate_password(password)
+        #         registered_user = User(username, hashedPasswd, 0, True)
+        #         registered_user.save()
+        #     elif not check_password(registered_user.password, password):
+        #         result = {"message": "Invalid credentials", "category": "error"}
+        #         return json.dumps(result)
+        #     if login_user(registered_user, remember=True):
+        #         session['user_id'] = registered_user.id
+        #         registered_user.update(commit=False, loginTime=datetime.utcnow())
+        #         g.user = registered_user
+        #         job.update(commit=False, user_id=registered_user.id, name=job_name, description=description, status=status, is_save=True)
+        #         db.session.commit()
+        #     else:
+        #         result = {"message": "User is unable to logged in so can't create job", "category": "error"}
+        #         return json.dumps(result)
+        # else:
+        #     job.update(commit=False, name=job_name, description=description, status=status, is_save=True)
+        #     db.session.commit()
+
+        # NEW:  can save jobs without requiring a log-in
+        # save dialog no longer has user/pw fields and is not 
+        # creating new user with those.  Instead always creating an 'anonymous user' if
+        # there is no logged-in user. add P. Bills, IT Service, 5/2020         
+        if not job.user_id:  # user id is supposed to be assigned when job is created 
+            if g.user:
+                job.user_id = g.user.id  # use logged in user
             else:
-                result = {"message": "User is unable to logged in so can't create job", "category": "error"}
-                return json.dumps(result)
-        else:
-            job.update(commit=False, name=job_name, description=description, status=status, is_save=True)
-            db.session.commit()
+                # if no user, create a new 'anonymous' user so person does not
+                # have to log-in
+                new_user = User.job_only_user(job.id)
+                new_user.save()
+                job.user_id = new_user.id
+
+        job.update(commit=False, name=job_name, description=description, status=status, is_save=True)
+        db.session.commit()
         result = {"message": "Job saved successfully", "category": "success", "finishInfo": finishInfo}
+
         # Storing Job details
         jobDetails.update(commit=True, disease_name=disease_name, case_tissue_type=case_tissue_type,
                           case_site=case_site, case_gender=case_gender, case_metastatic_site=case_metastatic_site,
@@ -338,7 +369,7 @@ def save_job():
                        weight_cell_line]
             elif job.status == 3:
                 print "ELSE : Status 3"
-                cmd = [rscript_path, join(rdir_path + 'compute_sRGES_enrichment_rankLines.R'), str(job_id), case_path, control_path, de_method,
+                cmd = [rscript_path, join(rdir_path,'compute_sRGES_enrichment_rankLines.R'), str(job_id), case_path, control_path, de_method,
                        dz_fc_threshold, dz_p_threshold, debug, choose_fda_drugs, str(max_gene_size), str(landmark), weight_cell_line]
 
             else:
@@ -351,10 +382,17 @@ def save_job():
                 db.session.commit()
             except Exception as e:
                 pass
-        result.update(next_url=next_url, job_id=job_id)
+            #### SHOULD HANDLE EXCEPT FROM BAD R JOB HERE
+
+            # since it's finished, append the url for the job output to result dict
+            result.update(finished_url=url_for_job_output(job))
+
+        # finished or not, append these data to result     
+        result.update(next_url=next_url, job_id=job_id, output_url=url_for_job_output(job))
+
         return json.dumps(result)
     else:
-        result = {"message": "Invalid data please generate job again", "category": "error"}
+        result = {"message": "Error or Invalid data, please generate job again", "category": "error"}
         return json.dumps(result)
 
 
@@ -370,7 +408,11 @@ def job_history():
 def job_case(disease):
     """
     Running R script for job
-    :return: json object
+     - creates a new job record
+     - assigns the disease to the new job
+     - creates new folder for job
+     - writes new file case_ids.txt
+    :return: json object with job id
     """
     data = request.get_json(force=True)
     print data
@@ -562,8 +604,6 @@ def signature_upload_form():
     if request.method == 'GET':
         return render_template('dashboard/signature_upload_form.html')
 
-    # assuming post 
-    print "posting from signature form"
     # handle post of sigfile
     # create new job record, and if no users logged in, also create new user 
     
@@ -731,5 +771,4 @@ def url_for_job_output(job):
         BASE_URL in config
       """ 
     return app.config['BASE_URL'] + url_for('dashboard.job_output', job_id=job.id, key = job.generate_key())
-
 

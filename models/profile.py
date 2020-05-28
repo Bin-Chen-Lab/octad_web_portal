@@ -43,9 +43,9 @@ class User(UserMixin, CRUDMixin, db.Model):
 		if job_email:
 			username = job_email
 		else:
-			username="signatureupload"
+			username="anonymous_job"
 		
-		username = username  + "|" + str(jobid)
+		username = username  + "_" + str(jobid)
 
 		# assign a random password.  This account can't be used for log-in
 		password=generate_password(secrets.token_urlsafe(16))
