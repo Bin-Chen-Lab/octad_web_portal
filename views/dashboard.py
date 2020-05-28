@@ -166,6 +166,9 @@ def job_output(job_id):
         print "Job with id {} not found".format(job_id)
         return redirect(url_for('dashboard.job_history'))
 
+    disease_name = job.jobs[0].disease_name
+    job_status_name = STATUS[job.status]
+
     # job = Job.query.filter(Job.id == job_id, Job.user_id == g.user.id).first()
     if not job or job.status < 5: # 6
         return redirect(url_for('dashboard.job_history'))
@@ -175,7 +178,12 @@ def job_output(job_id):
     dz_enricher = []
     drug_file = ''
     drug_enricher = {}
-    pdf_path = app.config['APPLICATION_ROOT'] + file_path
+
+    #### I believe this is now incorrect...
+    # pdf_path = app.config['APPLICATION_ROOT'] + file_path
+    pdf_path = join(r_output, str(job.id))
+    print("checking path {} for output files...".format(pdf_path))
+
     for dirPath, dirNames, fileNames in walk(pdf_path):
         for fileName in fileNames:
             if fileName.lower().startswith('signature'):
@@ -213,6 +221,7 @@ def job_output(job_id):
     return render_template('dashboard/output.html', job=job, file_name=file_name,
                            signature_file=signature_file, dz_enricher=dz_enricher,
                            drug_file=drug_file, drug_enricher=drug_enricher, job_url = job_url, 
+                           job_status_name = job_status_name, disease = disease_name,
                            is_complete = is_complete)
 
 def compute_control_samples():

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Octad</title>
+    <title>Octad | Job Output for {{job.id}}</title>
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/optraIcon.png') }}" type="image/x-icon">
 	{% include 'base/css_links.html' %}
 
@@ -42,7 +42,7 @@
                             <span style="font-size: 14px;color: #0ca90c;">
                                 <strong>Job Name : </strong>
                             </span>
-                            <span style=" margin-left: 1%;margin-right: 5%; font-weight: 900;">{{ job.name }}</span>
+                            <span style=" margin-left: 1%;margin-right: 5%; font-weight: 900;">{{job.id}}: {{ job.name }}</span>
                             <span style="font-size: 14px;color: #0ca90c;">
                                 <strong>Creation Date : </strong>
                             </span>
@@ -51,6 +51,7 @@
                                 <strong>Job Description : </strong>                                
                             </span>
                             <span style=" margin-left: 1%;font-weight: 900;">{{ job.description }}</span>
+                            <span style=" margin-left: 1%;font-weight: 900;">{{ job_status_name }}</span>
                             <span style="float: right;"><button id="drugsFiles">Download Related Files</button></span>
 
                             <p style="margin:0; padding:0; padding-top:1em;">
