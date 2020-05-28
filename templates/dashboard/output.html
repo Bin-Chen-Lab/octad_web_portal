@@ -51,7 +51,7 @@
                                 <strong>Job Description : </strong>                                
                             </span>
                             <span style=" margin-left: 1%;font-weight: 900;">{{ job.description }}</span>
-                            <span style=" margin-left: 1%;font-weight: 900;">{{ job_status_name }}</span>
+                            <!-- <span style=" margin-left: 1%;font-weight: 900;">{{ job_status_name }}</span> -->
                             {% if is_complete %}
                             {# only show download button is job is complete #}
                                 <span style="float: right;"><button id="drugsFiles">Download Related Files</button></span>
@@ -61,6 +61,9 @@
                                     <strong>Permanent URL : </strong>
                                 </span>
                                 <span style=" margin-left: 1%;margin-right: 5%; font-weight: 900;"><a href="{{job_url}}">{{job_url}}</a></span>
+                                <span style=" margin-left: 10%;font-weight: 900; padding:0.25em;" class="bg-primary">
+                                    {{ job_status_name }}
+                                </span>
                             </p>
                             
                        </div>
@@ -380,7 +383,7 @@
         "ajax": "{{ url_for('api.sampleCsvApi', job_id=job.id, name = 'approved_drugs') }}",
         "lengthMenu": [[5, 25, 50, -1], [5, 25, 50, "All"]],
         "searching" : true,
-        "order": [[ 4, "desc" ]],
+        "order": [[ 4, "asc" ]],
     });
     <!-- END : Load the sRGES FD Aapproveddrugs CSV data -->
 
