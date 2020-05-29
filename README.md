@@ -1,6 +1,6 @@
 # OCTAD web portal
 
-## Run Applicataion
+## Run Application
 
 ```bash
 # mysql restart not usually necessary
