@@ -172,9 +172,6 @@ h5 {
   background-color: #2f4050;
   background-image: url("patterns/header-profile.png");
 }
-.pace-done .nav-header {
-  transition: all 0.4s;
-}
 .nav > li > a.active {
   border-left: 4px solid #19aa8d;
   background: #293846;
@@ -311,16 +308,7 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
   display: none;
   padding: 18px 0;
 }
-.pace-done .navbar-static-side,
-.pace-done .nav-header,
-.pace-done li.active,
-.pace-done #page-wrapper,
-.pace-done .footer {
-  -webkit-transition: all 0.4s;
-  -moz-transition: all 0.4s;
-  -o-transition: all 0.4s;
-  transition: all 0.4s;
-}
+
 .navbar-fixed-top {
   background: #fff;
   transition-duration: 0.4s;
@@ -1748,29 +1736,7 @@ div.dt-button-info {
   font-size: 12px;
   text-transform: uppercase;
 }
-/* PEACE */
-.pace {
-  -webkit-pointer-events: none;
-  pointer-events: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  user-select: none;
-}
-.pace-inactive {
-  display: none;
-}
-.pace .pace-progress {
-  background: #1ab394;
-  position: fixed;
-  z-index: 2040;
-  top: 0;
-  right: 100%;
-  width: 100%;
-  height: 2px;
-}
-.pace-inactive {
-  display: none;
-}
+
 /* WIDGETS */
 .widget {
   border-radius: 5px;
@@ -6660,25 +6626,8 @@ body.body-small .vote-icon {
  *   Copyright 2014 Webapplayers.com
  *
 */
-/* GLOBAL STYLES
--------------------------------------------------- */
-/* PACE PLUGIN
--------------------------------------------------- */
-.landing-page.pace .pace-progress {
-  background: #fff;
-  position: fixed;
-  z-index: 2000;
-  top: 0;
-  left: 0;
-  height: 2px;
-  -webkit-transition: width 1s;
-  -moz-transition: width 1s;
-  -o-transition: width 1s;
-  transition: width 1s;
-}
-.pace-inactive {
-  display: none;
-}
+/* GLOBAL STYLES */
+
 body.landing-page {
   color: #676a6c;
   font-family: 'Open Sans', helvetica, arial, sans-serif;
@@ -8051,9 +8000,7 @@ body.md-skin {
 .md-skin .navbar-top-links .dropdown-menu li {
   display: block;
 }
-.md-skin .pace-done .nav-header {
-  transition: all 0.4s;
-}
+
 .md-skin .nav > li.active {
   background: #f8f8f9;
 }
@@ -8093,16 +8040,7 @@ body.md-skin {
 .md-skin .canvas-menu.mini-navbar .nav-second-level {
   background: inherit;
 }
-.md-skin .pace-done .navbar-static-side,
-.md-skin .pace-done .nav-header,
-.md-skin .pace-done li.active,
-.md-skin .pace-done #page-wrapper,
-.md-skin .pace-done .footer {
-  -webkit-transition: all 0.4s;
-  -moz-transition: all 0.4s;
-  -o-transition: all 0.4s;
-  transition: all 0.4s;
-}
+
 .md-skin .navbar-fixed-top {
   background: #fff;
   transition-duration: 0.4s;
