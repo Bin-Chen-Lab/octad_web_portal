@@ -644,13 +644,16 @@ def signature_upload_form():
         return redirect(request.url)
     
     ### collect form information
-    job_name = request.form.get('job_name',"upload {} on {}".format(sigfile.filename, datetime.utcnow())) # validate this
+    job_timestamp = datetime.utcnow()
+
+    job_name = request.form.get('job_name',None)
+    if job_name == None or job_name == "":
+        job_name = "{} file upload".format(sigfile.filename)
     job_email = request.form.get('job_email',None)
     job_description = request.form.get('job_description','uploaded job')
     choose_fda_drugs = request.form.get('choose_fda_drugs', 'T')
     max_gene_size = request.form.get('max_genes_size', 50)
     landmark  = 1 # request.form.get('max_genes_size', 1)  # this value must be 1 or R code crashes
-    job_timestamp = datetime.utcnow()
 
     ### DATABASE RECORDS : Job, JobDetails, AnonymousUser
     #### JOB
