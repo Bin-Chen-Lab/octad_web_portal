@@ -724,7 +724,7 @@ def signature_upload_form():
         result = {"message": "Job submission error  {}".format(e), "category": "error" }
         return json.dumps(result)
 
-    job.update(commit=True, is_save = True, status=6) # set to 6 for now to allow viewing output
+    job.update(commit=True, is_save = True, status=5) # set to 6 for now to allow viewing output
     db.session.commit()
 
     # since post is called by JS, render job submission info html and return for inserting into page 
