@@ -15,3 +15,5 @@ sudo systemctl restart nginx
 
 # export APP_ROOT=/var/www/html/octad_web_portal
 # uwsgi --stop $APP_ROOT/octad.pid
+
+
