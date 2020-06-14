@@ -121,6 +121,7 @@
 										</div>
 									</div>
 									<hr>
+									<label>For best experience, please wait ~20 seconds before select samples. Click + for more filtering options.</label>
 									<div class="row m-n" id="auto_search">
 										<div class="col-lg-4 diseaseNameSelect" style="padding: 0 5px;">
 											<a class="casePlusAddFilter m-r-xs m-l-sm" style="margin-top: 8px;"><i class="fa fa-plus-square" aria-hidden="true"></i></a>
@@ -1131,7 +1132,7 @@
 		function dgGetPageCount() {
 			$("#pageCount").remove();
 			var res = $(".select-item").text().split(" ");
-			var mdata = '<span id="pageCount" style="color: red;float: left; font-size: 10px;margin: 14px 17px;"><b>Warning:</b> Using very few samples will result in a less robust disease signature and may negatively impact your results! Proceed with caution or increase sample size.</span>';
+			var mdata = '<span id="pageCount" style="color: red;float: left; font-size: 10px;margin: 14px 17px;"><b>Warning:</b> Using very few samples will result in a less robust disease signature and may negatively impact your results! Proceed with caution or increase sample size. Note that selecting the check box besides More Info on the table above allows to select all samples.</span>';
 			//alert("inside : " + res[0]);
 			if( res[0] == '' || parseInt(res[0]) <= 10 ) {
 				$(".actions.clearfix").append( mdata );
@@ -2734,6 +2735,7 @@
 					"ajax": sampleApiUrl,
 					"lengthMenu": [[5, 25, 50, -1], [5, 25, 50, "All"]],
 					"searching" : true,
+					"order": [[ 2, "desc" ]],
 				});
 			}
 			<!-- END : Displaying the Singature CSV on Signature Page -->
@@ -2746,6 +2748,7 @@
 					"ajax": sampleApiUrl,
 					"lengthMenu": [[5, 25, 50, -1], [5, 25, 50, "All"]],
 					"searching" : true,
+					 "order": [[ 4, "desc" ]],
 				});
 			}
 			<!-- END : Displaying the Up Singature Genes CSV on Signature Page -->
@@ -2758,6 +2761,7 @@
 					"ajax": sampleApiUrl,
 					"lengthMenu": [[5, 25, 50, -1], [5, 25, 50, "All"]],
 					"searching" : true,
+					"order": [[ 4, "desc" ]],
 				});
 			}
 			<!-- END : Displaying the Down Singature Genes CSV on Signature Page -->
@@ -2851,14 +2855,15 @@
 									else
 										data = data+'<option value="'+str+'" disabled>'+str+'</option>';
 									}
-
-								if(str == 'Metastatic Site' )
-									{
-									if(features_data.metastatics.length > 0)
-										data = data+'<option value="'+str+'">'+str+'</option>';
-									else
-										data = data+'<option value="'+str+'" disabled>'+str+'</option>';
-									}
+								
+							<!--	if(str == 'Metastatic Site' )-->
+							<!-- 		{ -->
+							<!-- 		if(features_data.metastatics.length > 0) -->
+							<!-- 			data = data+'<option value="'+str+'">'+str+'</option>'; -->
+							<!-- 		else -->
+							<!-- 			data = data+'<option value="'+str+'" disabled>'+str+'</option>';-->
+							<!-- 		} -->
+								
 
 								<!--if(str == 'EGFR' )-->
 									<!--{-->
@@ -2898,7 +2903,7 @@
 										<!--data = data+'<option value="'+str+'>'+str+'</option>';-->
 									<!--else-->
 										<!--data = data+'<option value="'+str+'" disabled>'+str+'</option>';-->
-
+								
 								if(str == 'Tumor Grade')
 									{
 									if(features_data.grades.length > 0)
@@ -2906,7 +2911,7 @@
 									else
 										data = data+'<option value="'+str+'" disabled>'+str+'</option>';
 									}
-
+     								
 								if(str == 'Tumor Stage' )
 									{
 									if(features_data.stages.length > 0)
