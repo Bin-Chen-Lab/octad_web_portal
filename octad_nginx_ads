@@ -1,0 +1,22 @@
+server {
+  listen			 8080;
+	server_name		octad.org;
+  
+	location /static {
+		alias /var/www/html/octad_web_portal_ads/static;
+	}
+
+	location / {
+		include			   uwsgi_params;
+		uwsgi_pass		   127.0.0.1:5003;
+		proxy_read_timeout	   1000;
+		uwsgi_read_timeout         1000;
+		uwsgi_param  UWSGI_PYHOME  /var/www/html/octad_web_portal_ads/env;
+		uwsgi_param  UWSGI_CHDIR   /var/www/html/octad_web_portal_ads;
+		uwsgi_param  UWSGI_MODULE  app;
+		uwsgi_param  UWSGI_CALLABLE app;
+	}
+
+	error_page	404	/404.html;
+
+}

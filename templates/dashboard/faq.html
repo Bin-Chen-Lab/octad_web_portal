@@ -70,7 +70,7 @@
                     which database you want to evaluate the potential to reverse the disease signature expression. You can either compute
                     disease signature earlier or submit the job directly. OCTAD will compute disease signature if it detects there is no
                     signature computed. It takes a few minutes to compute disease signature and about ten minutes to run drug prediction.
-                    You must be logged in to run drug prediction. When the job is complete, an email will be sent to you. A full summary
+                    You can run drug prediction anonymously or through a registered account. A unique URL is created for each job. The files from the anonymous submission will be deleted after three months. A full summary
                     report will be available to review and all data files (description of datafiles is available here) can be downloaded
                     after the job is complete. You can manage your jobs and check job status by going to the jobs page.</p>
                   <h3>Databases</h3>
@@ -109,13 +109,13 @@
                   <p>This feature is deprecated. Those points are either outliers or the samples are mislabeled in the data source. You
                     can remove that sample from your sample set if it is deemed necessary.</p>
                   <p> <strong>I have my own control samples. How do I use my own dataset?</strong></p>
-                  <p>Currently, we DO NOT support users to upload their own data. This function will become available in the next version.
+                  <p>Currently, we DO NOT support users to upload their own data. This function will become available in the next version. Or use the octad package for customized samples.
                   </p>
                   <p><strong>Can I compare two sample types that are not the cancer-normal pairing? Ie. How would I explore the different
                       expression between two cancer types such as colon cancer and rectum cancer? How do I compare adjacent tissue with
                       normal tissue?</strong></p>
                   <p>The portal does not support at this moment. Alternatively, you make a prediction for each cancer or subtype and then
-                    merge the results.</p>
+                    merge the results. The octad R package supports such advanced queries.</p>
                   <p><strong>How do I manually choose my samples?</strong></p>
                   <p>In the sample list, you can manually select samples by checking the ones you want and unchecking the ones you want to
                     exclude in your set.</p>
@@ -149,11 +149,11 @@
                   <p><strong>How can I add RNAseq data to your tissue sample database?</strong></p>
                   <p>Yes, but we have to do it manually.</p>
                   <p><strong>Can I have access to the raw RNA sequence data?</strong></p>
-                  <p>As our pipeline uses sources from other databases, we do not have the raw sequences.</p>
+                  <p>As our pipeline uses sources from other databases, we do not release the raw sequences.</p>
                   <p><strong>What browsers does OCTAD support?</strong></p>
                   <p>Chrome, Safari, Microsoft Edge, and Mozilla Firefox. Octad is currently unavailable on mobile devices.</p>
                   <p><strong>Can I use the results and images in a academic paper?</strong></p>
-                  <p>Yes. The job id is the permanent id.</p>
+                  <p>Yes. The job id is the permanent id. We encourage you to log in before job submission.</p>
                   <p><strong>What is the desktop version of OCTAD and where can it be accessed?</strong></p>
                   <p>The backend of the web and desktop versions is done with the R statistical programming language. The desktop version
                     provides more flexibility than the web version. It is a open source project that still is under development. If you
@@ -163,10 +163,13 @@
                   
                   
                     <h3>Overall pipeline</h3>
-                    <div style="display:block; width: 75%;"><img src="{{ url_for('static', filename='img/octad_pipeline_scheme.png') }}"></div>
+                    <div style="display:block; width: 50%;"><img src="{{ url_for('static', filename='img/R_pipeline.png') }}" width="100%"></div>
+
+		    <h3>Troubleshooting in web portal</h3>
                   
-                  
-                    <h3>Troubleshooting</h3>
+                   <div style="display:block; width: 70%;"><img src="{{ url_for('static', filename='img/webportal_troubleshooting.png' ) }}" width="100%"></div>
+
+                    <h3>Troubleshooting in R package</h3>
                         <figure>
                           <table  class="table table-striped table-bordered" >
                             <thead>

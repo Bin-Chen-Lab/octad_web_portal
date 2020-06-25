@@ -10,7 +10,7 @@ STATUS = {0: 'Created', 1: 'Case Visualization', 2: 'Ref Tissue Algo Run', 3: 'C
 		4: 'Signature Compute', 5: 'Drug Prediction In-progress', 6: 'Completed'}
 
 FEATURES = {1: 'Tissue Type', 2: 'Site', 3: 'Gender', 4: 'Metastatic Site', 5: 'EGFR',
-			6: 'IDH1', 7: 'IDH2', 8: 'TP53', 9: 'Age', 10: 'Tumor Grade', 11: 'Tumor Stage', 12: 'Mutation', 13: 'Gain', 14: 'Loss'}
+			6: 'IDH1', 7: 'IDH2', 8: 'TP53', 9: 'Age', 10: 'Tumor Subtype', 11: 'Tumor Stage', 12: 'Mutation', 13: 'Gain', 14: 'Loss'}
 
 
 class Samples(CRUDMixin, db.Model):

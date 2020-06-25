@@ -54,7 +54,7 @@ function format2 ( d ) {
             '<td>'+d[11]+'</td>'+
             '<td style="font-weight:bold">IDH2:</td>'+
             '<td >'+d[12]+'</td>'+
-            '<td style="font-weight:bold">Tumor Grade:</td>'+
+            '<td style="font-weight:bold">Tumor Subtype:</td>'+
             '<td>'+d[13]+'</td>'+
             '<td style="font-weight:bold">Tumor Stage:</td>'+
             '<td >'+d[14]+'</td>'+

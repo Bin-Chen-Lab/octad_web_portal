@@ -28,13 +28,13 @@ def dataset():
     return render_template('dashboard/dataset.html')
 
 
-@dashboardRoute.route('/code', methods=["GET"])
+@dashboardRoute.route('/download', methods=["GET"])
 # @login_required
-def code():
+def download():
     """
     Static page displayed
     """
-    return render_template('dashboard/code.html')
+    return render_template('dashboard/download.html')
 
 
 @dashboardRoute.route('/tutorials', methods=["GET"])

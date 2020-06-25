@@ -211,7 +211,7 @@
 											<th>IDH1</th>
 											<th>IDH2</th>
 											<th>TP53</th>
-											<th>Tumor Grade</th>
+											<th>Tumor Subtype</th>
 											<th>Tumor Stage</th>
 											 <th>Mutation</th>
 											 <th>Gain</th>
@@ -420,7 +420,7 @@
 											<th>IDH1</th>
 											<th>IDH2</th>
 											<th>TP53</th>
-											<th>Tumor Grade</th>
+											<th>Tumor Subtype</th>
 											<th>Tumor Stage</th>
 										</tr>
 									</thead>
@@ -1132,7 +1132,7 @@
 		function dgGetPageCount() {
 			$("#pageCount").remove();
 			var res = $(".select-item").text().split(" ");
-			var mdata = '<span id="pageCount" style="color: red;float: left; font-size: 10px;margin: 14px 17px;"><b>Warning:</b> Using very few samples will result in a less robust disease signature and may negatively impact your results! Proceed with caution or increase sample size. Note that selecting the check box besides More Info on the table above allows to select all samples.</span>';
+			var mdata = '<span id="pageCount" style="color: red;float: left; font-size: 10px;margin: 14px 17px;"><b>Warning:</b> Using few samples will result in a less robust disease signature and may negatively impact your results! Note that selecting the check box besides More Info on the table above allows to select all samples.</span>';
 			//alert("inside : " + res[0]);
 			if( res[0] == '' || parseInt(res[0]) <= 10 ) {
 				$(".actions.clearfix").append( mdata );
@@ -1186,7 +1186,7 @@
 				});
 				<!-- END : Code for Loss to reset the apply filter -->
 
-				<!-- START : Code for Tumor Grade to reset the filter -->
+				<!-- START : Code for Tumor Subtype to reset the filter -->
 				$('.dg_caseTumorGradeFilter').each(function(){
 					$("#pageCount").remove();
 					$("select.dg_caseTumorGradeFilter").change(function(){
@@ -1198,7 +1198,7 @@
 						}
 					});
 				});
-				<!-- END : Code for Tumor Grade to reset the filter -->
+				<!-- END : Code for Tumor Subtype to reset the filter -->
 
 				<!-- START : Code for Tumor Stage to reset the apply filter -->
 				$('.dg_caseTumorStageFilter').each(function(){
@@ -1367,7 +1367,7 @@
 						}
 					} else if ($(this).data('columnIndex') == 12){
 
-						<!-- START : Feature for the Tumor Grade -->
+						<!-- START : Feature for the Tumor Subtype -->
 
 						var tumorGradeList = [];
 						$.each($(".dg_caseTumorGradeFilter option:selected"), function(){
@@ -1376,7 +1376,7 @@
 						var strTumorGradeList = tumorGradeList.join("|");
 						caseTable.columns(13).search("^" + strTumorGradeList + "$", true, false, true);
 
-						<!-- END : Feature for the Tumor Grade -->
+						<!-- END : Feature for the Tumor Subtype -->
 
 					} else if ($(this).data('columnIndex') == 13){
 
@@ -2169,7 +2169,7 @@
 							  str = str + '<div class="form-group row bordrBtm"><label class="col-lg-4 text-info">'+filterSelectVal+'</label><label class="col-lg-8"><b>'+$("#caseAgeDisplay").val()+'</b></label></div>';
 						}
 
-						else if(filterSelectVal == 'Tumor Grade')
+						else if(filterSelectVal == 'Tumor Subtype')
 						{
 							  str = str + '<div class="form-group row bordrBtm"><label class="col-lg-4 text-info">'+filterSelectVal+'</label><label class="col-lg-8"><b>'+$('select[name="case_tumor_grade"]').val()+'</b></label></div>';
 						}
@@ -2246,7 +2246,7 @@
 							  cstr = cstr + '<div class="form-group row bordrBtm"><label class="col-lg-4 text-info">'+cfilterSelectVal+'</label><label class="col-lg-8"><b>'+$("#controlAgeDisplay").val()+'</b></label></div>';
 						}
 
-						else if(cfilterSelectVal == 'Tumor Grade')
+						else if(cfilterSelectVal == 'Tumor Subtype')
 						{
 
 							  cstr = cstr + '<div class="form-group row bordrBtm"><label class="col-lg-4 text-info">'+filterSelectVal+'</label><label class="col-lg-8"><b>'+$('select[name="control_tumor_grade"]').val()+'</b></label></div>';
@@ -2904,7 +2904,7 @@
 									<!--else-->
 										<!--data = data+'<option value="'+str+'" disabled>'+str+'</option>';-->
 								
-								if(str == 'Tumor Grade')
+								if(str == 'Tumor Subtype')
 									{
 									if(features_data.grades.length > 0)
 										data = data+'<option value="'+str+'">'+str+'</option>';
@@ -3204,7 +3204,7 @@
 						});
 					// age slider code --------------
 
-					}else if (feature_val == "Tumor Grade" || feature_val == 10){
+					}else if (feature_val == "Tumor Subtype" || feature_val == 10){
 						data = '<input type="text" name="case_tumor_grade_hd" style="display:none;" class="casefilter" data-column-index="12"><input id="getCaseTumorGradeName" name="case_tumor_grade_name" class="form-control" style="display:none;" value="" type="text"><select class="casefilter dg_caseTumorGradeFilter search-box" multiple="multiple" placeholder="Select Grade" name="case_tumor_grade" data-column-index="12">';
 							<!--'<option>Select Grade</option>';-->
 						   	{% for g in grades %}
@@ -3518,7 +3518,7 @@
 				   		$('select.search-box.dg_caseGenderFilter')[0].sumo.selectAll();
 				   	} else if (feature_val == "Metastatic Site"){
 				   		$('select.search-box.dg_caseMetastaticFilter')[0].sumo.selectAll();
-				   	} else if (feature_val == "Tumor Grade"){
+				   	} else if (feature_val == "Tumor Subtype"){
 				   		$('select.search-box.dg_caseTumorGradeFilter')[0].sumo.selectAll();
 				   	} else if (feature_val == "Tumor Stage"){
 				   		$('select.search-box.dg_caseTumorStageFilter')[0].sumo.selectAll();
@@ -3657,7 +3657,7 @@
 						if(str == 'Age')
 							data = data+'<option value="'+str+'">'+str+'</option>';
 
-						if(str == 'Tumor Grade')
+						if(str == 'Tumor Subtype')
 							{
 							if(control_features_data.grades.length > 0)
 								data = data+'<option value="'+str+'">'+str+'</option>';
@@ -3836,7 +3836,7 @@
 					}else if (feature_val == "Age" || feature_val == 9){
 						data = 	'<input type="text" id="controlAgeDisplay" name="control_age" data-column-index="14" class="controlfilter ageDisplayInput m-t-xs" readonly>'+
 							'<div id="controlAgeSlider" class="ageSliderDiv m-t-sm" data-column-index="14"></div>'
-					}else if (feature_val == "Tumor Grade" || feature_val == 10){
+					}else if (feature_val == "Tumor Subtype" || feature_val == 10){
 						data = '<input type="text" name="control_tumor_grade_hd" style="display:none;" class="controlfilter" data-column-index="12"><select placeholder="Select Grade"  class="controlfilter search-boxControl" name="control_tumor_grade" data-column-index="12">'+ // select2_demo_3
 						   	'<option>Select Grade</option>';
 							{% for g in grades %}
@@ -4219,7 +4219,7 @@
 					'<td>'+d[6]+'</td>'+
 					'<td style="font-weight:bold">Age:</td>'+
 					'<td>'+d[4]+'</td>'+
-					'<td style="font-weight:bold">Tumor Grade:</td>'+
+					'<td style="font-weight:bold">Tumor Subtype:</td>'+
 					'<td>'+d[13]+'</td>'+
 					'<td style="font-weight:bold">Tumor Stage:</td>'+
 					'<td >'+d[14]+'</td>'+

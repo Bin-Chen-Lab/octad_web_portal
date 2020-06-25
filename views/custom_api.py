@@ -28,7 +28,7 @@ def sampleApi1():
     json of job information
     :return: json object
     """
-    tissue_type = ['adjacent']
+    tissue_type = ['adjacent', 'normal']
     samples = Samples.query.filter(not_(Samples.tissue_type.in_(tissue_type))).all()
 
     sampleList = []
@@ -452,15 +452,15 @@ def get_casefeature_by_disease():
     gain_list = data.get('gain_list', empGain)
     loss_list = data.get('loss_list', empLoss)
     sites_list = get_sites(disease, tissue_type, gender, metastatic, egfr, idh1, idh2, tp53, age, tumor_grade, tumor_stage)
-    metastatics_list = get_metastatics(disease, tissue_type, site, gender, egfr, idh1, idh2, tp53, age, tumor_grade, tumor_stage)
+    metastatics_list = [] #get_metastatics(disease, tissue_type, site, gender, egfr, idh1, idh2, tp53, age, tumor_grade, tumor_stage)
     grades_list = get_grades(disease, tissue_type, site, gender, metastatic, egfr, idh1, idh2, tp53, age, tumor_stage)
     stages_list = get_stages(disease, tissue_type, site, gender, metastatic, egfr, idh1, idh2, tp53, age, tumor_grade)
     tissue_types_list = get_tissue_types(disease, site, gender, metastatic, egfr, idh1, idh2, tp53, age, tumor_grade, tumor_stage)
     gender_list = get_gender(disease, tissue_type, site, metastatic, egfr, idh1, idh2, tp53, age, tumor_grade, tumor_stage)
-    egfr_list = get_EGFR(disease, tissue_type, site, gender, metastatic, idh1, idh2, tp53, age, tumor_grade, tumor_stage)
-    idh1_list = get_IDH1(disease, tissue_type, site, gender, metastatic, egfr, idh2, tp53, age, tumor_grade, tumor_stage)
-    idh2_list = get_IDH2(disease, tissue_type, site, gender, metastatic, egfr, idh1, tp53, age, tumor_grade, tumor_stage)
-    tp53_list = get_TP53(disease, tissue_type, site, gender, metastatic, egfr, idh1, idh2, age, tumor_grade, tumor_stage)
+    egfr_list = [] #get_EGFR(disease, tissue_type, site, gender, metastatic, idh1, idh2, tp53, age, tumor_grade, tumor_stage)
+    idh1_list = [] # get_IDH1(disease, tissue_type, site, gender, metastatic, egfr, idh2, tp53, age, tumor_grade, tumor_stage)
+    idh2_list = [] # get_IDH2(disease, tissue_type, site, gender, metastatic, egfr, idh1, tp53, age, tumor_grade, tumor_stage)
+    tp53_list = [] #get_TP53(disease, tissue_type, site, gender, metastatic, egfr, idh1, idh2, age, tumor_grade, tumor_stage)
     mutation_list_data = get_mutation_list(disease, tissue_type, site, gender, metastatic, egfr, idh1, idh2, age, tumor_grade,tumor_stage,mutation_list)
     gain_list_data = get_gain_list(disease, tissue_type, site, gender, metastatic, egfr, idh1, idh2, age, tumor_grade,tumor_stage,gain_list)
     loss_list_data = get_loss_list(disease, tissue_type, site, gender, metastatic, egfr, idh1, idh2, age, tumor_grade,tumor_stage,loss_list)
