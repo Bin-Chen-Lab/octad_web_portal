@@ -20,7 +20,7 @@ itsdangerous==1.1.0
 Jinja2==2.10.1
 keyring
 keyrings.alt==3.0
-Mako==1.0.10
+Mako==1.2.2
 MarkupSafe==1.1.1
 
 MySQL-connector-python
